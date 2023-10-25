@@ -10,7 +10,7 @@
             @csrf
             
             <label for="nombre">Nombre categoría: </label><br>
-            <input class="form-control" type="text" name="nombre" pattern="[a-zA-Z ]{3,254}" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
+            <input class="form-control" type="text" name="nombre" pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
         
             <label hidden for="activo">Activo: </label><br>
             <select hidden name="activo" id="activo">

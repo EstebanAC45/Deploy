@@ -17,7 +17,16 @@ class ClienteController extends Controller
     {
         //
         $datos['clientes'] = Cliente::paginate();
-        return view('cliente.index', $datos);
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('cliente.index', $datos);
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -26,7 +35,17 @@ class ClienteController extends Controller
     public function create()
     {
         //
-        return view('cliente.create');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('cliente.create');
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -93,7 +112,17 @@ class ClienteController extends Controller
     public function edit(Cliente $cliente)
     {
         //
-        return view('cliente.edit', compact('cliente'));
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('cliente.edit', compact('cliente'));
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

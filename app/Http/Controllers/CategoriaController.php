@@ -18,8 +18,18 @@ class CategoriaController extends Controller
        $sentenciaSelect = "SELECT categorias.id, categorias.nombre,categorias.activo FROM categorias";
          $datos['categorias'] = \DB::select($sentenciaSelect);
 
-        return view('categoria.index', $datos);
-        //return json_encode($datos['categorias']);
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('categoria.index', $datos);
+            }
+
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -28,7 +38,18 @@ class CategoriaController extends Controller
     public function create()
     {
         //
-        return view('categoria.create');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('categoria.create');
+            }
+
+            
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -57,7 +78,17 @@ class CategoriaController extends Controller
     {
         //
         $categoria = Categoria::findOrFail($id);
-        return view('categoria.edit', compact('categoria'));
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('categoria.edit', compact('categoria'));
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -71,8 +102,12 @@ class CategoriaController extends Controller
 
         $categoria = Categoria::findOrFail($id);
         $datos['categorias'] = Categoria::paginate();
-
-        return view('categoria.index', $datos);
+        
+        if (session()->has('id')) {
+            return view('categoria.index', $datos);
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -83,8 +118,10 @@ class CategoriaController extends Controller
 
         Categoria::destroy($id);
         
-
-        return redirect('categoria');
-
+        if (session()->has('id')) {
+            return redirect('categoria');
+        } else {
+            return redirect()->route('login');
+        }
     }
 }

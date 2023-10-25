@@ -99,8 +99,8 @@
 <div class="modal fade" id="crearProducto" tabindex="-1" aria-labelledby="crearProducto" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Agregar Producto</h5>
+      <div class="modal-header" style="background-color: #8DD3EC;">
+        <h5 class="modal-title" id="exampleModalLabel" >Agregar Producto</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">

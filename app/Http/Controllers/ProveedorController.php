@@ -14,8 +14,17 @@ class ProveedorController extends Controller
     {
         //
         $datos['proveedores'] = Proveedor::paginate();
+        if (session()->has('id')) {
 
-        return view('proveedor.index', $datos);
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('proveedor.index', $datos);
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -23,7 +32,17 @@ class ProveedorController extends Controller
      */
     public function create()
     {
-        return view('proveedor.create');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('proveedor.create');
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -34,6 +53,7 @@ class ProveedorController extends Controller
 
         $datosProveedor = request()->except('_token');
         Proveedor::insert($datosProveedor);
+
 
         return redirect('proveedor');
     }
@@ -53,7 +73,17 @@ class ProveedorController extends Controller
     {
         //
         $proveedor = Proveedor::findOrFail($id);
-        return view('proveedor.edit', compact('proveedor'));
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('proveedor.edit', compact('proveedor'));
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

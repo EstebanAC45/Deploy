@@ -19,7 +19,11 @@ class CarritoController extends Controller
         //
         $sentencia = "SELECT carrito.id, carrito.id_producto, carrito.cantidad, producto.nombre_producto, producto.precio, producto.stock FROM carritos as carrito INNER JOIN productos as producto ON carrito.id_producto = producto.id";
         $datos['carritos'] = \DB::select($sentencia);
-        return redirect('venta', $datos);
+        if (session()->has('id')) {
+            return view('carrito.index', $datos);
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -28,7 +32,11 @@ class CarritoController extends Controller
     public function create()
     {
         //
-        return redirect('venta');
+        if (session()->has('id')) {
+            return view('carrito.create');
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -53,6 +61,7 @@ class CarritoController extends Controller
         $datosCarrito = request()->except('_token');
 
         Carrito::insert($datosCarrito);
+
         return redirect('venta');
 
 
@@ -136,5 +145,12 @@ class CarritoController extends Controller
         
 
         Carrito::destroy($id);
-        return redirect('venta/create');    }
+
+        if (session()->has('id')) {
+            return redirect('venta/create');
+        } else {
+            return redirect()->route('login');
+        }
+
+       }
 }

@@ -6,6 +6,7 @@ use App\Models\Producto_Proveedor;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 
+
 class ProductoProveedorController extends Controller
 {
     /**
@@ -20,7 +21,12 @@ class ProductoProveedorController extends Controller
 
         $datos['producto_proveedors'] = \DB::select($sentenciaSQL);
 
-        return view('producto_proveedor.index', $datos);
+        //para que la ruta se muestre solo si hay sesión activa
+        if (session()->has('id')) {
+            return view('producto_proveedor.index', $datos);
+        } else {
+            return redirect()->route('login');
+        }
 
     }
 
@@ -30,7 +36,18 @@ class ProductoProveedorController extends Controller
     public function create()
     {
         //
-        return view('producto_proveedor.create');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                $productos = Producto::all();
+                return view('producto_proveedor.create', compact('productos'));
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -60,7 +77,18 @@ class ProductoProveedorController extends Controller
     {
         //
         $producto_proveedor = Producto_Proveedor::findOrFail($id);
-        return view('producto_proveedor.edit', compact('producto_proveedor'));
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('producto_proveedor.edit', compact('producto_proveedor'));
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
+
     }
 
     /**
@@ -87,7 +115,13 @@ class ProductoProveedorController extends Controller
         //
         $sentenciaSQL = "DELETE FROM producto__proveedors WHERE id = '$id'";
         \DB::select($sentenciaSQL);
-        return redirect('producto_proveedor');
+
+        if (session()->has('id')) {
+            return redirect('producto_proveedor');
+        } else {
+            return redirect()->route('login');
+        }
+
 
         
 

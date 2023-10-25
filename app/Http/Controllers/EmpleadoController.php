@@ -16,7 +16,18 @@ class EmpleadoController extends Controller
     {
         //
         $datos['empleados'] = Empleado::paginate();
-        return view('empleado.index', $datos);
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2 || session()->get('rol') == 1) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('empleado.index', $datos);
+            }
+
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -25,7 +36,17 @@ class EmpleadoController extends Controller
     public function create()
     {
         //
-        return view('empleado.create');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2 || session()->get('rol') == 1) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('empleado.create');
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -64,6 +85,7 @@ class EmpleadoController extends Controller
             'id_rol' => $id_rol
         ]);
 
+
         return redirect('empleado')->with('mensaje', 'Empleado registrado exitosamente');
 
     }
@@ -82,7 +104,16 @@ class EmpleadoController extends Controller
     public function edit(Empleado $empleado)
     {
         //
-        return view('empleado.edit', compact('empleado'));
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2 || session()->get('rol') == 1) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('empleado.edit', compact('empleado'));
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

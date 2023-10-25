@@ -15,7 +15,12 @@ class VentaController extends Controller
         //
         $sentencia = "SELECT venta.id,venta.numero_venta,venta.created_at,venta.fecha,venta.id_cliente,cliente.direccion,cliente.telefono, cliente.nombres,cliente.apellidos, venta.precio_venta FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id";
         $datos['ventas'] = \DB::select($sentencia);
-        return view('venta.index', $datos);
+
+        if (session()->has('id')) {
+            return view('venta.index', $datos);
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -24,7 +29,11 @@ class VentaController extends Controller
     public function create()
     {
         //
-        return view('venta.create');
+        if (session()->has('id')) {
+            return view('venta.create');
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     public function factura()
@@ -68,7 +77,11 @@ class VentaController extends Controller
     public function edit(Venta $venta)
     {
         //
-        return view('venta.edit', compact('venta'));
+        if (session()->has('id')) {
+            return view('venta.edit', compact('venta'));
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

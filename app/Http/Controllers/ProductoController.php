@@ -6,6 +6,7 @@ use App\Models\Producto;
 use App\Models\Categoria;
 use App\Models\Producto_Proveedor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductoController extends Controller
@@ -28,7 +29,17 @@ class ProductoController extends Controller
          FROM productos p, categorias c WHERE p.id_categoria = c.id";
         $datos['productos'] = \DB::select($sentenciaSQL);
         //return json_encode($datos['productos']);
-        return view('producto.index', $datos);
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('producto.index', $datos);
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
 
     }
 
@@ -38,7 +49,19 @@ class ProductoController extends Controller
     public function create()
     {
         //
-        return view('producto.create');
+        $categorias = Categoria::all();
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('producto.create', compact('categorias'));
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
+
     }
 
     /**
@@ -84,7 +107,17 @@ class ProductoController extends Controller
     {
         //
         $producto = Producto::findOrFail($id);
-        return view('producto.edit', compact('producto'));
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('producto.edit', compact('producto'));
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -94,6 +127,14 @@ class ProductoController extends Controller
     {
         //
         $datosProducto = request()->except(['_token', '_method', 'id_producto', 'id_proveedor', 'precio_compra']);
+
+        if ($request->hasFile('imagen')) {
+            $producto = Producto::findOrFail($id);
+            Storage::delete('public/' . $producto->imagen);
+            $datosProducto['imagen'] = $request->file('imagen')->store('uploads', 'public');
+
+        }
+
         Producto::where('id', '=', $id)->update($datosProducto);
 
         $producto = Producto::findOrFail($id);

@@ -13,7 +13,7 @@
     $rol = session('rol');
 @endphp
 
-<h2>BIENVENIDO {{$nombre}}, HECHA UN VISTAZO A NUESTROS PRODUCTOS</h2>
+<h2>Bienvenido {{$nombre}}, navega por nuestro catalogo de productos</h2>
 
 <br><br>
 
@@ -36,7 +36,7 @@
             @if($producto_proveedor->activo == 1)
         <div class="col-md-4">
         <div class="card" style="width: 18rem;">
-            <img src="{{ asset('storage').'/'.$producto_proveedor->imagen }}" alt="" width="280" height="160">
+            <center><img src="{{ asset('storage').'/'.$producto_proveedor->imagen }}" alt="" width="200" height="160"></center>
             <div class="card-body">
                 <input type="text" name="id_producto" id="id_producto" value="{{$producto_proveedor->id_producto}}" hidden>
                 <h5 class="card-title">{{$producto_proveedor->nombre_producto}} - $ {{$producto_proveedor->precio}}</h5>
@@ -99,7 +99,9 @@
                         </script>
                 </div>
             </div>
+<br>
         </div>
+        
         @endif
         @endforeach
 

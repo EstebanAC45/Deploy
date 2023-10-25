@@ -100,7 +100,7 @@
         </li>
         
         <li class="nav-item ms-auto d-flex align-items-center" id="cerrar_sesion">
-          <a class="nav-link" href="{{ route ('logout') }}">
+          <a  class="nav-link btn btn-danger" href="{{ route ('logout') }}">
           <i class="bi bi-file-earmark-person">Cerrar sesión</i>
           </a>
         </li>

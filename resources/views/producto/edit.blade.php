@@ -70,7 +70,7 @@ Editar producto
 </select>
 <br>
 <label for="precio_compra">Precio unitario:</label>
-<input class="form-control" type="number" name="precio_compra" id="precio_compra" value="{{ isset($producto_proveedora[0]->precio_compra)?$producto_proveedora[0]->precio_compra:'' }}" required><br>
+<input class="form-control" type="number" name="precio_compra" id="precio_compra" step="any" value="{{ isset($producto_proveedora[0]->precio_compra)?$producto_proveedora[0]->precio_compra:'' }}" required><br>
 
 <input type="submit" value="Guardar" class="btn btn-primary">
 </form>
