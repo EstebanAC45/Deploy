@@ -41,7 +41,7 @@ class EmpleadoController extends Controller
             if (session()->get('rol') == 2 || session()->get('rol') == 1) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('empleado.create');
+                return redirect ()->route('empleado.index');
             }
 
         } else {
@@ -109,7 +109,7 @@ class EmpleadoController extends Controller
             if (session()->get('rol') == 2 || session()->get('rol') == 1) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('empleado.edit', compact('empleado'));
+                return redirect ()->route('empleado.index');
             }
         } else {
             return redirect()->route('login');

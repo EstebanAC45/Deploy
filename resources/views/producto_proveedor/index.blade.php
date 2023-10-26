@@ -1,6 +1,7 @@
 @inject('carritos', 'App\Models\Carrito')
 @inject('productos', 'App\Models\Producto')
 @inject ('venta', 'App\Models\Venta')
+@inject ('categorias', 'App\Models\Categoria')
 @extends('layouts.parte1')
 
 @section('contenido')
@@ -13,9 +14,39 @@
     $rol = session('rol');
 @endphp
 
-<h2>Bienvenido {{$nombre}}, navega por nuestro catalogo de productos</h2>
+<h4>Bienvenid@ {{$nombre}}, navega por nuestro catalogo de productos</h4>
+<style>   
 
-<br><br>
+</style>
+<!--Filtrar por categorias-->
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <form action="{{route('producto_proveedor.filtrarProductoProCategoria')}}" method="GET">
+                <select name="id_categoria" id="id_categoria" class="form-select">
+                    
+                    <option value="">Filtrar por categoría</option>
+                    @foreach($categorias->get() as $categoria)
+                        <option value="{{$categoria->id}}" selected="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                    @endforeach
+                </select>
+                <br>
+        </div>
+        <div class="col-md-1">
+         <!--Para evitar que filtre sin haber seleccionado una categoría-->
+            
+                <button id="categoriaMover" type="submit" class="btn btn-primary categoriaMover">Filtrar</button>
+
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form action="{{route('producto_proveedor.index')}}" method="GET">
+                <button id="categoriaMover" type="submit" class="btn btn-primary categoriaMover">Mostrar todos</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 
 @php 
@@ -39,7 +70,8 @@
             <center><img src="{{ asset('storage').'/'.$producto_proveedor->imagen }}" alt="" width="200" height="160"></center>
             <div class="card-body">
                 <input type="text" name="id_producto" id="id_producto" value="{{$producto_proveedor->id_producto}}" hidden>
-                <h5 class="card-title">{{$producto_proveedor->nombre_producto}} - $ {{$producto_proveedor->precio}}</h5>
+                <h5 class="card-title">{{$producto_proveedor->nombre_producto}}  </h5>
+                <h5 class="card-title">$ {{$producto_proveedor->precio}}</h5>
                 <h6 class="card-title"> Disponibles: {{$producto_proveedor->stock}}</h6>
                 <input type="number" name="cantidad" id="cantidad{{$producto_proveedor->id_producto}}" class="form-control" value="1" placeholder="Ingrese cantidad" min="1" max="{{$producto_proveedor->stock}}">
                 <p class="card-text">{{$producto_proveedor->descripcion}}</p>
@@ -122,7 +154,7 @@
             "lengthMenu": [[5,10,50,-1], [5,10,50,"All"]],
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
-            },
+            }
 
 
         });

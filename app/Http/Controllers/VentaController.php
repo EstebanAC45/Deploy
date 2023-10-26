@@ -13,7 +13,7 @@ class VentaController extends Controller
     public function index()
     {
         //
-        $sentencia = "SELECT venta.id,venta.numero_venta,venta.created_at,venta.fecha,venta.id_cliente,cliente.direccion,cliente.telefono, cliente.nombres,cliente.apellidos, venta.precio_venta FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id";
+        $sentencia = "SELECT venta.id,venta.numero_venta,venta.created_at,venta.fecha,venta.id_cliente,cliente.direccion,cliente.telefono, cliente.nombres,cliente.apellidos,cliente.correo, venta.precio_venta FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id";
         $datos['ventas'] = \DB::select($sentencia);
 
         if (session()->has('id')) {

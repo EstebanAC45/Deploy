@@ -117,7 +117,10 @@
                 @csrf
                 <input type="number" name="numero_venta" id="numero_venta" value="{{$contador_ventas + 1}}" hidden >
                 @foreach ($cliente->get() as $cliente)
-                @if($cliente->correo == session('email'))
+                @php
+                $rol = session('rol');
+                @endphp
+                @if($cliente->correo == session('email') && $rol == 2)
                 <input type="number" name="id_cliente" id="cliente_seleccionado" value="{{$cliente->id}}" hidden >
                 <input type="number" name="compras_realizadas" id="compra_seleccionada" value="{{$cliente->compras_realizadas}}" hidden>
                 @endif
@@ -125,10 +128,11 @@
                 @php
                 $rol = session('rol');
                 @endphp
-                @if($rol == 1)
+                @if($rol == 1 || $rol == 3)
                 <input type="number" name="id_cliente" id="cliente_seleccionado" value="" hidden>
                 <input type="number" name="compras_realizadas" id="compra_seleccionada" value="" hidden>
                 @endif
+
                 <input type="number" name="precio_venta" id="precio_venta" value="{{$total_pagar}}" hidden ><br><br>
                 <input type="text" name="fecha" id="fecha" value="{{ date('d-m-Y h:i:s') }}" hidden>
                 <input type="text" name="created_at" id="created_ad" value="{{date('d-m-Y h:i:s')}}" hidden >
@@ -143,7 +147,7 @@
                 @csrf
                 <input type="number" name="numero_venta" id="numero_venta" value="{{$contador_ventas + 1}}" hidden>
                 @foreach ($cliente->get() as $cliente)
-                @if($cliente->correo == session('email'))
+                @if($cliente->correo == session('email') && $rol == 2)
                 <input type="number" name="id_cliente" id="cliente_seleccionado1" value="{{$cliente->id}}" hidden>
                 <input type="number" name="compras_realizadas" id="compra_seleccionada1" value="{{$cliente->compras_realizadas}}" hidden >
                 @endif
@@ -153,11 +157,10 @@
                 $rol = session('rol');
                 @endphp
 
-                @if($rol == 1)
+                @if($rol == 1 || $rol == 3)
                 <input type="number" name="id_cliente" id="cliente_seleccionado1" value="" hidden>
-                <input type="number" name="compras_realizadas" id="compra_seleccionada1" value="" hidden >
+                <input type="number" name="compras_realizadas" id="compra_seleccionada1" value="" hidden >          
                 @endif
-
                 <input type="text" name="fecha" id="fecha" value="{{  date('d-m-Y h:i:s') }}" hidden>
                 <input type="number" name="precio_venta" id="precio_venta" value="{{$total_pagar}}" hidden><br><br>
                 <input type="text" name="created_at" id="created_ad" value="{{date('d-m-Y h:i:s')}}" hidden>

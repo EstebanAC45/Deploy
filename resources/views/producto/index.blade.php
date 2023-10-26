@@ -76,9 +76,9 @@
               
         <!-- Modal para editar -->
         <div class="modal fade" id="editarProducto-{{$producto->id}}" tabindex="-1" aria-labelledby="editarProducto-{{$producto->id}}" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background-color: #63D38B;">
                 <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

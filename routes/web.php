@@ -55,3 +55,5 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::resource('empleado', EmpleadoController::class);
 
+Route::get('filtrarProductoProCategoria', [ProductoProveedorController::class, 'filtrarProductoProCategoria'])->name('producto_proveedor.filtrarProductoProCategoria');
+

@@ -70,7 +70,7 @@
 			<tbody>
 				<tr>
 				@foreach($cliente as $cliente)
-					<td>{{ $cliente->nombres}}{{$cliente->apellidos}}</td>
+					<td>{{ $cliente->nombres}} {{$cliente->apellidos}}</td>
 					<td>{{ $cliente->direccion }}</td>
 					<td>{{ $cliente->telefono }}</td>
 					<td>{{ $cliente->correo }}</td>

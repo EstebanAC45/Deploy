@@ -37,7 +37,7 @@ class ProveedorController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect()->route('producto_proveedor.index');
             } else {
-                return view('proveedor.create');
+                return redirect()->route('proveedor.index');
             }
 
         } else {
@@ -78,7 +78,7 @@ class ProveedorController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('proveedor.edit', compact('proveedor'));
+                return redirect ()->route('proveedor.index');
             }
 
         } else {

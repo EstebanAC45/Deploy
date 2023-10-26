@@ -30,6 +30,22 @@ class ProductoProveedorController extends Controller
 
     }
 
+    public function filtrarProductoProCategoria(){
+        $id_categoria = $_GET['id_categoria'];
+        $sentenciaSQL = "SELECT producto__proveedors.id,producto__proveedors.id_producto,productos.activo,productos.precio,productos.stock,productos.imagen, productos.nombre as nombre_producto,productos.descripcion, proveedors.nombre as nombre_proveedor, proveedors.id as id_proveedor,proveedors.direccion, proveedors.telefono,proveedors.email as id_proveedor, producto__proveedors.precio_compra
+        FROM producto__proveedors INNER JOIN productos ON producto__proveedors.id_producto = productos.id
+        INNER JOIN proveedors ON producto__proveedors.id_proveedor = proveedors.id
+        WHERE productos.id_categoria = '$id_categoria'";
+
+        $datos['producto_proveedors'] = \DB::select($sentenciaSQL);
+
+        //para que la ruta se muestre solo si hay sesión activa
+        if (session()->has('id')) {
+            return view('producto_proveedor.index', $datos);
+        } else {
+            return redirect()->route('login');
+        }
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -42,7 +58,7 @@ class ProductoProveedorController extends Controller
                 return redirect ()->route('producto_proveedor.index');
             } else {
                 $productos = Producto::all();
-                return view('producto_proveedor.create', compact('productos'));
+                return redirect ()->route('producto_proveedor.index');
             }
 
         } else {
@@ -82,7 +98,7 @@ class ProductoProveedorController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('producto_proveedor.edit', compact('producto_proveedor'));
+                return redirect()->route('producto_proveedor.index', compact('producto_proveedor'));
             }
             
         } else {

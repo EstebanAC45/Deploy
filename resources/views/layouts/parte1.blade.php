@@ -20,8 +20,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+
+
+
 </head>
 <body>
+
+<!--mover el cerrar sesión a la derecha-->
+<style>
+  #cerrar_sesion{
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+    margin-left: auto;
+
+  }
+</style>
+
 
 @php
  $rol = session('rol');
@@ -85,7 +101,7 @@
 
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/venta" hidden>Ventas</a>
+          <a class="nav-link" href="http://localhost:8080/too/public/venta" >Compras realizadas</a>
         </li>
         @else
         <li class="nav-item">
@@ -99,13 +115,14 @@
           </a>
         </li>
         
-        <li class="nav-item ms-auto d-flex align-items-center" id="cerrar_sesion">
-          <a  class="nav-link btn btn-danger" href="{{ route ('logout') }}">
-          <i class="bi bi-file-earmark-person">Cerrar sesión</i>
-          </a>
-        </li>
+
+
+
       </ul>
 
+      <a id="cerrar_sesion" class="nav-link" href="{{ route ('logout') }}">
+          <i class="bi bi-file-earmark-person">{{session('nombre')}}</i>
+      </a>
     </div>
   </div>
   

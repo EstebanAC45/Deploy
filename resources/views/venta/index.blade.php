@@ -1,12 +1,20 @@
 @extends('layouts.parte1')
 @inject('carritos', 'App\Models\Carrito')
 @inject('productos', 'App\Models\Producto')
+@inject('clientes', 'App\Models\Cliente')
 @inject('pdf', 'App\Http\Controllers\PDFController')
 
 
 @section('contenido')
 <h2>Registro de ventas realizadas</h2>
 
+
+@php 
+ $rol = session ('rol');
+ $correo = session ('email');
+@endphp
+
+@if ($rol == 1 || $rol == 3)
 <table id="ventas" class="table table-striped" style="width:100%">
     <thead>
         <tr>
@@ -75,6 +83,67 @@
     
 
 </table>
+@endif
+
+<!--compararemos el rol del usuario para mostrarle solo sus ventas con el correo del cliente y de sesion-->
+@if ($rol == 2)
+@php
+    $contador = 0;
+@endphp
+
+    
+    <table id="ventasCliente" class="table table-striped" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>Productos</th>
+                <th>Fecha compra</th>
+                <th>Total</th>
+                <th>Generar Factura</th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach($ventas as $venta)
+    @if($venta->correo == $correo)
+    @php
+        $contador++;
+        $carrito_venta = $carritos::where('numero_venta', $venta->numero_venta)->get();
+    @endphp
+            <tr>
+               <td>{{$contador}}</td>
+               <td>
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#cliente{{$venta->numero_venta}}">
+                        <i class="bi bi-person"> {{$venta->nombres}}{{$venta->apellidos}}</i>
+                    </button>
+               </td>
+               <td>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal{{$venta->numero_venta}}">
+                       <i class="bi bi-list-ol"> Productos</i>
+                    </button>
+                </td>
+
+                <td>
+                    {{ $venta->created_at }}
+                </td>
+
+                <td>
+                    <i>$ {{ $venta->precio_venta }}</i>
+                </td>
+
+                <td>
+                    <a href="{{ route('pdf.show', $venta->numero_venta) }}" class="btn btn-success" target="_blank"><i class="bi bi-file-earmark-pdf"> Factura</i></a>
+                </td>
+            </tr>
+            @endif
+            @endforeach
+        </tbody>
+    </table>
+
+@endif
+
+
 @foreach($ventas as $venta)
 @php
     $carrito_venta = $carritos::where('numero_venta', $venta->numero_venta)->get(); 
@@ -125,7 +194,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Listado de productos</h5>
+                <h5 class="modal-title" id="myModalLabel">Datos del cliente</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -230,10 +299,10 @@
         $('#ventas').DataTable({
             "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todos"]],
             "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
+                "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"              
+             
             },
-
-
+            
         });
     });   
 

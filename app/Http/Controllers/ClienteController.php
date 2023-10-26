@@ -40,7 +40,7 @@ class ClienteController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect()->route('producto_proveedor.index');
             } else {
-                return view('cliente.create');
+                return redirect()->route('cliente.index');
             }
 
         } else {
@@ -95,7 +95,14 @@ class ClienteController extends Controller
             'rol' => 2,
         ]);
 
-        return redirect('/')->with('mensaje', 'Cliente agregado con éxito');
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 1 || session()->get('rol') == 3) {
+                return redirect('cliente')->with('mensaje', 'Cliente agregado con éxito');
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -117,7 +124,7 @@ class ClienteController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect()->route('producto_proveedor.index');
             } else {
-                return view('cliente.edit', compact('cliente'));
+                return redirect ()->route('cliente.index');
             }
             
         } else {
@@ -133,6 +140,20 @@ class ClienteController extends Controller
         //
         $datosCliente = request()->except(['_token', '_method']);
         Cliente::where('id', '=', $cliente->id)->update($datosCliente);
+
+        $nombreCliente = $request->input('nombres');
+        $apellidoCliente = $request->input('apellidos');
+        $correoCliente = $request->input('correo');
+        $contrasenaCliente = $request->input('contrasena');
+
+        DB::table('users')->where('email', '=', $correoCliente)->update([
+            'name' => $nombreCliente . ' ' . $apellidoCliente,
+            'email' => $correoCliente,
+            'password' => Hash::make($contrasenaCliente),
+            'rol' => 2,
+        ]);
+
+        
         
 
         return redirect('cliente')->with('mensaje', 'Cliente modificado con éxito');

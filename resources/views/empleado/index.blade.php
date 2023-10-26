@@ -21,7 +21,7 @@
                         <th>Teléfono</th>
                         <th>Dirección</th>
                         <th>Email</th>
-                        <th>Fecha de registro</th>
+                        <th>Cargo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -34,8 +34,17 @@
                         <td>{{$empleado->telefono}}</td>
                         <td>{{$empleado->direccion}}</td>
                         <td>{{$empleado->correo}}</td>
-                        <td>{{$empleado->fecha_registro}}</td>
                         <td>
+                        @if($empleado->id_rol == 1)
+                        Empleado
+                        @elseif($empleado->id_rol == 3)
+                        Administrador
+                        @endif
+                        </td>
+                        <td>
+                        
+                        @if($empleado->id_rol == 1)
+
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                             <form action="{{route('empleado.destroy', $empleado->id)}}" method="post">
                                 @csrf
@@ -43,6 +52,8 @@
                                 <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form>
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editarEmpleado{{$empleado->id}}" >Editar</button>
+                        </div>
+                        @endif
                         </td>
                  
                     </tr>
@@ -50,7 +61,7 @@
 <div class="modal fade" id="editarEmpleado{{$empleado->id}}" tabindex="-1" aria-labelledby="editarEmpleado{{$empleado->id}}" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" style="background-color: #63D38B;">
         <h5 class="modal-title" id="exampleModalLabel">Editar datos del empleado</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -118,7 +129,7 @@
 <div class="modal fade" id="modalAgregarEmpleado" tabindex="-1" aria-labelledby="modalAgregarEmpleado" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" style="background-color: #8DD3EC;">
             <h5 class="modal-title" id="exampleModalLabel">Supermercado, Aquí todo encuentras - Agregar empleado</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

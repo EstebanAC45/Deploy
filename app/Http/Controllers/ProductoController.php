@@ -55,7 +55,7 @@ class ProductoController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('producto.create', compact('categorias'));
+                return redirect ()->route('producto.index');
             }
 
         } else {
@@ -112,7 +112,7 @@ class ProductoController extends Controller
             if (session()->get('rol') == 2) {
                 return redirect ()->route('producto_proveedor.index');
             } else {
-                return view('producto.edit', compact('producto'));
+                return redirect ()->route('producto.index', compact('producto'));
             }
 
         } else {
