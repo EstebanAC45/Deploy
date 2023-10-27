@@ -31,7 +31,21 @@ class ProductoProveedorController extends Controller
     }
 
     public function filtrarProductoProCategoria(){
+
+
+
         $id_categoria = $_GET['id_categoria'];
+
+        if ($id_categoria == "") {
+            //iniciar la sesion de mensaje de error
+            
+            session()->flash('mensaje', 'No se ha seleccionado ninguna categoría');
+            session()->flash('icono', 'error');
+            
+
+            return redirect('producto_proveedor');
+        }
+
         $sentenciaSQL = "SELECT producto__proveedors.id,producto__proveedors.id_producto,productos.activo,productos.precio,productos.stock,productos.imagen, productos.nombre as nombre_producto,productos.descripcion, proveedors.nombre as nombre_proveedor, proveedors.id as id_proveedor,proveedors.direccion, proveedors.telefono,proveedors.email as id_proveedor, producto__proveedors.precio_compra
         FROM producto__proveedors INNER JOIN productos ON producto__proveedors.id_producto = productos.id
         INNER JOIN proveedors ON producto__proveedors.id_proveedor = proveedors.id

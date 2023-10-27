@@ -59,7 +59,20 @@ class CategoriaController extends Controller
     {
         //
         $datosCategoria = request()->except('_token');
+
+        //para no agregar categorías existentes
+        $categoria = Categoria::where('nombre', '=', $datosCategoria['nombre'])->first();
+
+        if ($categoria != null) {
+            session()->flash('mensaje', 'La categoría ya existe');
+            
+        }else{
+
+            session()->flash('mensaje1', 'Categoría agregada con éxito');
+                    
         Categoria::insert($datosCategoria);
+        }
+;
         return redirect('categoria');
     }
 
@@ -100,6 +113,8 @@ class CategoriaController extends Controller
         $datosCategoria = request()->except(['_token', '_method']);
         Categoria::where('id', '=', $id)->update($datosCategoria);
 
+
+
         $categoria = Categoria::findOrFail($id);
         $datos['categorias'] = Categoria::paginate();
         
@@ -108,6 +123,8 @@ class CategoriaController extends Controller
         } else {
             return redirect()->route('login');
         }
+
+
     }
 
     /**

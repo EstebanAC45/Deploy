@@ -1,3 +1,4 @@
+@inject ('empleados', 'App\Models\Empleado')
 @extends('layouts.parte1')
 
 @section('contenido')
@@ -9,6 +10,36 @@
 
 <h2>Empleados en el sistema</h2>
 
+
+@if (session()->has('mensaje'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'El correo ya existe',
+                'error'
+            )
+        </script>
+    @endif
+
+    @if (session()->has('mensaje1'))
+        <script>
+            Swal.fire(
+                '¡Éxito!',
+                'Empleado agregado con éxito',
+                'success'
+            )
+        </script>
+    @endif
+
+    @if (session()->has('mensaje2'))
+        <script>
+            Swal.fire(
+                '¡Éxito!',
+                'Empleado editado con éxito',
+                'success'
+            )
+        </script>
+    @endif
 
 <div class="container">
     <div class="row">
@@ -27,7 +58,7 @@
                 </thead>
                 <tbody>
                     
-                        @foreach($empleados as $empleado)
+                        @foreach($empleados->get() as $empleado)
                         <tr>
                         <td>{{$empleado->nombres}}</td>
                         <td>{{$empleado->apellidos}}</td>
@@ -160,7 +191,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password">Contraseña</label>
-                            <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
+                            <input type="password" name="contrasena" pattern="^[a-zA-Z0-9_]{4,}$" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
                         </div>
                         <input type="number" name="activo" id="activo" value="1" hidden>
                         <input type="text" name="fecha_registro" id="fecha_registro" value="{{date('d-m-y')}}" hidden>

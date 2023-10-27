@@ -13,10 +13,10 @@
                 <input type="text" name="nombres" class="form-control" id="nombres" value="{{$cliente->nombres}}"  pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
 
                 <label for="direccion">{{'Dirección'}}</label><br>
-                <input type="text" name="direccion" class="form-control" id="direccion" value="{{$cliente->direccion}}" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚ, ]+$" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
+                <input type="text"  name="direccion" class="form-control" id="direccion" value="{{$cliente->direccion}}" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚ, ]+$" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
 
                 <label for="correo">{{'Correo'}}</label><br>
-                <input type="email" name="correo" class="form-control" id="correo" value="{{$cliente->correo}}" required><br>
+                <input type="email" readonly name="correo" class="form-control" id="correo" value="{{$cliente->correo}}" required><br>
 
                 <label for="activo">{{'Activo'}}</label><br>
                 <select class="form-select" name="activo" id="activo">

@@ -1,3 +1,4 @@
+@inject ('clientes', 'App\Models\Cliente')
 <!DOCTYPE html>
 <html>
 
@@ -63,6 +64,28 @@
 </head>
 
 <body>
+
+    
+    @if (session()->has('mensaje'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'El correo ya existe',
+                'error'
+            )
+        </script>
+    @endif
+
+    @if (session()->has('mensaje1'))
+        <script>
+            Swal.fire(
+                '¡Éxito!',
+                'Cliente agregado con éxito',
+                'success'
+            )
+        </script>
+    @endif
+
     <div class="login-container">
         <img src="https://cdn-icons-png.flaticon.com/512/3082/3082031.png" alt="Logo">
         <h1>Aquí todo encuentras</h1>
@@ -95,19 +118,19 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label for="nombre">Nombre</label>
-                            <input type="text" name="nombres" id="nombres" class="form-control" placeholder="Ingrese nombre" required>
+                            <input type="text" name="nombres" id="nombres" pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" class="form-control" placeholder="Ingrese nombre" required>
                         </div>
                         <div class="col-md-6">
                             <label for="apellido">Apellido</label>
-                            <input type="text" name="apellidos" id="apellidos" class="form-control" placeholder="Ingrese apellido" required>
+                            <input type="text" name="apellidos" id="apellidos" pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" class="form-control" placeholder="Ingrese apellido" required>
                         </div>
                         <div class="col-md-6">
                             <label for="telefono">Teléfono</label>
-                            <input type="number" name="telefono" id="telefono" class="form-control" placeholder="Ingrese teléfono" required>
+                            <input type="number" name="telefono" id="telefono" pattern="[0-9]+" class="form-control" placeholder="Ingrese teléfono" required>
                         </div>
                         <div class="col-md-6">
                             <label for="direccion">Dirección</label>
-                            <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Ingrese dirección" required>
+                            <input type="text" name="direccion" id="direccion" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚ, ]+$" class="form-control" placeholder="Ingrese dirección" required>
                         </div>
                         <div class="col-md-6">
                             <label for="email">Email</label>
@@ -115,7 +138,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password">Contraseña</label>
-                            <input type="password" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
+                            <input type="password" pattern="^[a-zA-Z0-9_]{4,}$" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
                         </div>
                         <input type="number" name="compras_realizadas" id="compras_realizadas" value="0" hidden>
                         <input type="number" name="activo" id="activo" value="1" hidden>
@@ -135,20 +158,4 @@
     </div>
 </body>
 </html>
-<script>
-    $('#crearUsuario').on('submit', function(e){
-        e.preventDefault();
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Haz sido registrado exitosamente',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(function(){
-            $('#crearUsuario').off('submit').submit();
-        });
-    });
-
-
-</script>
 

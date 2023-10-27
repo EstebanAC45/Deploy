@@ -12,7 +12,7 @@
     @csrf
     {{method_field('PATCH')}}
     <label for="nombre">Nombre categoría: </label><br>
-    <input type="text" class="form-control" name="nombre" value="{{isset($categoria->nombre)?$categoria->nombre:''}}" pattern="[a-zA-Z ]{3,254}" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
+    <input type="text" class="form-control" name="nombre" value="{{isset($categoria->nombre)?$categoria->nombre:''}}" pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" title="Solo se permiten un mínimo de 3 letras, no números" required><br>
     
     <label for="activo">Activo: </label><br>
     <select class="form-select" name="activo" id="activo">

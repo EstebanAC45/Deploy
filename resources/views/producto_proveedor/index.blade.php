@@ -15,6 +15,20 @@
 @endphp
 
 <h4>Bienvenid@ {{$nombre}}, navega por nuestro catalogo de productos</h4>
+
+@if(session()->has('mensaje'))
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: '{{ session('icono') }}',
+            title: '{{ session('mensaje') }}',
+            showConfirmButton: false,
+            timer: 2500
+        })
+    </script>
+@endif
+
+
 <style>   
 
 </style>
@@ -27,7 +41,7 @@
                     
                     <option value="">Filtrar por categoría</option>
                     @foreach($categorias->get() as $categoria)
-                        <option value="{{$categoria->id}}" selected="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                        <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                     @endforeach
                 </select>
                 <br>
@@ -83,49 +97,48 @@
                     Añadir al carrito</i>
                 </button>
                 <script>
-                 function carritoCatalogo(id_producto){
-                     let rutacarrito = '{{ route('carrito.store') }}';
-                     let stock = $('#stock'+id_producto).val();
-                     let cantidad = $('#cantidad'+id_producto).val();
-                        if(cantidad > stock){
-                            swal.fire({
-                                title: "No hay suficiente stock",
-                                text: "Solo hay "+stock+" productos disponibles",
-                                icon: "error",
-                                confirmButtonText: "Aceptar",
-                                }).then((result) => {
-                                if (result.isConfirmed) {
-                                    location.reload();
-                                }
-                            });
-                        }else{
-                        console.log('ruta',rutacarrito)
-                             $.ajax({
-                                url: rutacarrito,
-                                     method: 'POST',
-                                     data: {
-                                        id_producto: id_producto,
-                                        cantidad: $('#cantidad'+id_producto).val(),
-                                         numero_venta:"{{$contador_ventas + 1}}",
-                                         _token: '{{ csrf_token() }}'
-                                            },
-                                        success: function(data){
-                                            
-                                            swal.fire({
-                                                title: "Producto añadido al carrito",
-                                                text: "Puede ver sus productos en el carrito",
-                                                icon: "success",
-                                                confirmButtonText: "Aceptar",
-                                                }).then((result) => {
-                                                if (result.isConfirmed) {
-                                                    location.reload();
-                                                }
-                                            });
+                function carritoCatalogo(id_producto) {
+    let rutacarrito = '{{ route('carrito.store') }}';
+    let stock = parseInt($('#stock' + id_producto).val()); // Convertir a número entero
+    let cantidad = parseInt($('#cantidad' + id_producto).val()); // Convertir a número entero
 
-                                 }
-                                });
-                        }
+    if (stock >= cantidad) {
+        console.log('ruta', rutacarrito);
+        $.ajax({
+            url: rutacarrito,
+            method: 'POST',
+            data: {
+                id_producto: id_producto,
+                cantidad: cantidad, // Utiliza la cantidad ya parseada
+                numero_venta: "{{$contador_ventas + 1}}",
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (data) {
+                swal.fire({
+                    title: "Producto añadido al carrito",
+                    text: "Puede ver sus productos en el carrito",
+                    icon: "success",
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
                     }
+                });
+            },
+        });
+    } else if (stock < cantidad) {
+        swal.fire({
+            title: "No hay suficiente stock",
+            text: "Ingrese una cantidad menor",
+            icon: "error",
+            confirmButtonText: "Aceptar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        });
+    }
+}
 
                                             
                         </script>

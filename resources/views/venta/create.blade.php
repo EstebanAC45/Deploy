@@ -55,7 +55,7 @@
 
 
                         <tr>
-                            <th>#</th>
+
                             <th>Producto</th>
                             <th>Descripción</th>
                             <th>Cantidad</th>
@@ -79,7 +79,7 @@
                         @endphp
 
                         <tr>
-                            <td>{{ $carrito->numero_venta }}</td>
+ 
                             
                             @foreach ($producto->get() as $producto)
                                 @if ($carrito->id_producto == $producto->id)
@@ -239,39 +239,49 @@
                                             </button>
 
                                         <script>
-                                            function sendCarrito(id_producto){
-                                                let rutacarrito = '{{ route('carrito.store') }}';
-                                                let stock = $('#stock'+id_producto).val();
-                                                let cantidad = $('#cantidad'+id_producto).val();
-                                                
-                                                /*if( $('#cantidad'+id_producto).val() > $('#stock'+id_producto).val()){
-                                                    swal.fire({
-                                                        title: "Error",
-                                                        text: "No hay suficiente stock",
-                                                        icon: "error",
-                                                        confirmButtonText: "Aceptar"
-                                                    });
-                                                }else{*/
-                                                console.log('ruta',rutacarrito)
-                                                $.ajax({
-                                                        url: rutacarrito,
-                                                        method: 'POST',
-                                                        data: {
-                                                            id_producto: id_producto,
-                                                            cantidad: $('#cantidad'+id_producto).val(),
-                                                            numero_venta:"{{$contador_ventas + 1}}",
-                                                            _token: '{{ csrf_token() }}'
-                                                        },
-                                                        success: function(data){
-                                                       
-                                                            $('#crearVenta').modal('toggle'); 
-                                                            location.reload(); 
-                                                        }
-                                                        
-                                                    });
-                                                //}
-                                            };
-                                            
+                                            function sendCarrito(id_producto) {
+    let rutacarrito = '{{ route('carrito.store') }}';
+    let stock = parseInt($('#stock' + id_producto).val()); // Convertir a número entero
+    let cantidad = parseInt($('#cantidad' + id_producto).val()); // Convertir a número entero
+
+    if (stock >= cantidad) {
+        console.log('ruta', rutacarrito);
+        $.ajax({
+            url: rutacarrito,
+            method: 'POST',
+            data: {
+                id_producto: id_producto,
+                cantidad: cantidad, // Utiliza la cantidad ya parseada
+                numero_venta: "{{$contador_ventas + 1}}",
+                _token: '{{ csrf_token() }}'
+            },
+            success: function (data) {
+                swal.fire({
+                    title: "Producto añadido al carrito",
+                    text: "Puede ver sus productos en el carrito",
+                    icon: "success",
+                    confirmButtonText: "Aceptar",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+            },
+        });
+    } else if (stock < cantidad) {
+        swal.fire({
+            title: "No hay suficiente stock",
+            text: "Ingrese una cantidad menor",
+            icon: "error",
+            confirmButtonText: "Aceptar",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
+        });
+    }
+}
+                    
                                         </script>
 
                                     </td>

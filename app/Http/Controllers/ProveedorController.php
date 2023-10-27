@@ -52,8 +52,19 @@ class ProveedorController extends Controller
     {
 
         $datosProveedor = request()->except('_token');
-        Proveedor::insert($datosProveedor);
+                //validaremos que solo exista un correo por proveedor
 
+        $correo = $request->input('email');
+        $existe = Proveedor::where('email', '=', $correo)->exists();
+
+        if ($existe) {
+            return redirect('proveedor')->with('mensaje', 'El correo ya existe');
+        }else{
+
+
+            Proveedor::insert($datosProveedor);
+            return redirect('proveedor')->with('mensaje1', 'Proveedor agregado con éxito');
+        }
 
         return redirect('proveedor');
     }

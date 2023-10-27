@@ -7,6 +7,46 @@
 <br><br>
 
 <h2>Lista de categorías</h2>
+
+@if(session('mensaje'))
+    <script>
+        Swal.fire(
+            '¡Error!',
+            'La categoría ya existe',
+            'error'
+        )
+    </script>
+@endif
+
+@if(session('mensaje1'))
+    <script>
+        Swal.fire(
+            '¡Éxito!',
+            'Categoría agregada con éxito',
+            'success'
+        )
+    </script>
+@endif
+
+@if(session('mensaje3'))
+    <script>
+        Swal.fire(
+            '¡Error!',
+            'La categoría ya existe',
+            'error'
+        )
+    </script>
+@endif
+
+@if(session('mensaje4'))
+    <script>
+        Swal.fire(
+            '¡Éxito!',
+            'Categoría editada con éxito',
+            'success'
+        )
+    </script>
+@endif
 <center>
 <table id="categorias" class="table table-striped" style="width:90%">
     <thead class="thead-light">

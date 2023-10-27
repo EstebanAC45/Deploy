@@ -1,8 +1,30 @@
 
-
 @extends('layouts.parte1')
 @section('contenido')
 <br>
+<h1>Proveedores</h1>
+@if(session()->has('mensaje'))
+<script>
+    Swal.fire(
+        'Error!',
+        'Correo existente',
+        'error'
+    )
+</script>
+@endif
+
+@if(session()->has('mensaje1'))
+<script>
+    Swal.fire(
+        'Exito!',
+        '{{ session('
+        mensaje1 ') }}',
+        'success'
+    )
+</script>
+@endif
+
+
 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearProveedor">
     <i class="bi bi-file-plus-fill"> Agregar proveedor</i>
 </a>

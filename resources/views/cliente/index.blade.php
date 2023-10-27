@@ -1,15 +1,33 @@
+@inject ('clientes', 'App\Models\Cliente')
 @extends('layouts.parte1')
 
 @section('contenido')
 
 <h1>Listado de clientes</h1>
 
-<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearCliente" ><i class="bi bi-bookmark-plus"> Crear Cliente</i></a><br><br>
+<a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearCliente" ><i class="bi bi-bookmark-plus"> Agregar Cliente</i></a><br><br>
 
+@if (session()->has('mensaje'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'El correo ya existe',
+                'error'
+            )
+        </script>
+    @endif
 
+    @if (session()->has('mensaje1'))
+        <script>
+            Swal.fire(
+                '¡Éxito!',
+                'Cliente agregado con éxito',
+                'success'
+            )
+        </script>
+    @endif
 
-
-
+    
 <table id="cliente"class="table table-striped" style="width:100%">
     <thead>
         <tr>
@@ -29,7 +47,7 @@
         @php 
             $contador = 0;
         @endphp
-        @foreach ($clientes as $cliente)
+        @foreach ($clientes->get() as $cliente)
         @php 
             $contador++;
         @endphp

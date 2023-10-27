@@ -19,17 +19,3 @@
 
 </form>
 
-<script>
-    $('#agregarProveedorSweet').on('submit', function(e){
-        e.preventDefault();
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Proveedor agregado correctamente',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(function(){
-            $('#agregarProveedorSweet').off('submit').submit();
-        });
-    })
-</script>

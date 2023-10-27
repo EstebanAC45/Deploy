@@ -6,6 +6,8 @@ use App\Models\Cliente;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 
 class ClienteController extends Controller
@@ -67,6 +69,20 @@ class ClienteController extends Controller
         $fecha_registro = $request->input('fecha_registro');
         $id_rol = $request->input('id_rol');
 
+        //validaremos que solo exista un correo por cliente y por usuario
+        $correoCliente = DB::table('clientes')->where('correo', '=', $correo)->count();
+        $correoUsuario = DB::table('users')->where('email', '=', $correo)->count();
+
+        if ($correoCliente > 0 || $correoUsuario > 0) {
+            session ()->flash ('mensaje', 'El correo ya existe');
+            session ()->flash ('icono', 'warning');
+            
+
+        }else{
+            session ()->flash ('mensaje1', 'Cliente agregado con éxito');
+            session ()->flash ('icono1', 'success');
+        //Agregamos los datos a la tabla clientes
+
         DB::table('clientes')->insert([
             'nombres' => $nombres,
             'apellidos' => $apellidos,
@@ -94,7 +110,7 @@ class ClienteController extends Controller
             'password' => Hash::make($contrasenaCliente),
             'rol' => 2,
         ]);
-
+    }
         if (session()->has('id')) {
 
             if (session()->get('rol') == 1 || session()->get('rol') == 3) {
@@ -156,7 +172,7 @@ class ClienteController extends Controller
         
         
 
-        return redirect('cliente')->with('mensaje', 'Cliente modificado con éxito');
+        return redirect('cliente');
     }
 
     /**

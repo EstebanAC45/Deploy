@@ -6,6 +6,8 @@ use App\Models\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class EmpleadoController extends Controller
 {
@@ -66,6 +68,20 @@ class EmpleadoController extends Controller
         $fecha_registro = $request->input('fecha_registro');
         $id_rol = $request->input('id_rol');
 
+        //validamos un correo por empleado y un correo por usuario
+        $correoCliente = DB::table('empleados')->where('correo', '=', $correo)->count();
+        $correoUsuario = DB::table('users')->where('email', '=', $correo)->count();
+
+        if ($correoCliente > 0 || $correoUsuario > 0) {
+            session ()->flash ('mensaje', 'El correo ya existe');
+            session ()->flash ('icono', 'warning');
+            
+
+        }else{
+            session ()->flash ('mensaje1', 'Cliente agregado con éxito');
+            session ()->flash ('icono1', 'success');
+
+
         DB::table('users')->insert([
             'name' => $nombres . ' ' . $apellidos,
             'email' => $correo,
@@ -84,9 +100,9 @@ class EmpleadoController extends Controller
             'fecha_registro' => $fecha_registro,
             'id_rol' => $id_rol
         ]);
+    }
 
-
-        return redirect('empleado')->with('mensaje', 'Empleado registrado exitosamente');
+        return redirect('empleado');
 
     }
 
@@ -122,6 +138,7 @@ class EmpleadoController extends Controller
     public function update(Request $request, Empleado $empleado)
     {
         //
+
         $datosEmpleado = request()->except(['_token', '_method']);
         $nombres = $request->input('nombres');
         $apellidos = $request->input('apellidos');
@@ -152,7 +169,10 @@ class EmpleadoController extends Controller
             'id_rol' => $id_rol
         ]);
 
-        return redirect('empleado')->with('mensaje', 'Empleado actualizado exitosamente');
+        session()->flash('mensaje2', 'Empleado modificado con éxito');
+        session()->flash('icono2', 'success');
+
+        return redirect('empleado');
 
     }
 
