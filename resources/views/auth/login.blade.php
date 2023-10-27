@@ -86,6 +86,15 @@
         </script>
     @endif
 
+    @if (session()->has('mensaje3'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'Datos no válidos',
+                'error'
+            )
+        </script>
+@endif  
     <div class="login-container">
         <img src="https://cdn-icons-png.flaticon.com/512/3082/3082031.png" alt="Logo">
         <h1>Aquí todo encuentras</h1>

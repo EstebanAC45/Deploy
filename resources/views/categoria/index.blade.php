@@ -47,6 +47,13 @@
         )
     </script>
 @endif
+
+<div class="btn-group" role="group" aria-label="Basic example">
+    <a href="{{route('categoria.index')}}" class="btn btn-info">Todas</a>
+    <a href="{{ route('categoria.activas') }}" class="btn btn-primary">Activas</a>
+    <a href="{{ route('categoria.inactivas') }}" class="btn btn-secondary">Inactivas</a>
+</div>
+<br>
 <center>
 <table id="categorias" class="table table-striped" style="width:90%">
     <thead class="thead-light">
@@ -63,14 +70,10 @@
         <tr id="activoInactivo">
         <center><td><?php echo $contador;?></td></center>
         <center><td>{{ $categoria->nombre }}</td></center>
-            
+        <input type="text" id="activarInactivar" value="{{$categoria->activo}}" hidden>
             <td>
                 <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#editarCategoria-{{$categoria->id}}" ><i class="bi bi-pencil-fill">Editar</i></a>
-                <form action="{{ url('/categoria/'.$categoria->id) }}" method="post" style="display:inline">
-                    @csrf
-                    {{method_field('DELETE')}}
-                    <button class="btn btn-danger" id="categoria_elimiar_alert" type="submit"><i class="bi bi-trash-fill">Borrar</i></button>  
-                </form>
+
             </td>
         </tr>
         
@@ -142,6 +145,5 @@
     });   
 
 </script>
-
 
 @endsection

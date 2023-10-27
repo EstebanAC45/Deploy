@@ -1,4 +1,3 @@
-
 @extends('layouts.parte1')
 @section('contenido')
 <br>
@@ -17,12 +16,12 @@
 <script>
     Swal.fire(
         'Exito!',
-        '{{ session('
-        mensaje1 ') }}',
+        'Proveedor agregado correctamente',
         'success'
     )
 </script>
 @endif
+
 
 
 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearProveedor">
@@ -30,6 +29,16 @@
 </a>
 <br>
 <br>
+
+<!--Mandar el estado del proveedor para que se muestre en la tabla dependiendo si esta ac
+tivo o no-->
+<div class="btn-group" role="group" aria-label="Basic example">
+    <a href="{{route('proveedor.index')}}" class="btn btn-info">Todos</a>
+    <a href="{{ route('proveedor.activos') }}" class="btn btn-primary">Activos</a>
+    <a href="{{ route('proveedor.inactivos') }}" class="btn btn-secondary">Inactivos</a>
+</div>
+<br><br>
+
 <table id="proveedor"  class="table table-striped" style="width:100%">
     <thead class="thead-light">
         <tr>
@@ -41,7 +50,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($proveedores as $proveedor)
+        @foreach($proveedors as $proveedor)
         <tr>
             <td>
                 {{ $proveedor->nombre }}

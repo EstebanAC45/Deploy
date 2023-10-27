@@ -13,7 +13,40 @@ class ProveedorController extends Controller
     public function index()
     {
         //
-        $datos['proveedores'] = Proveedor::paginate();
+        $sentencia = "SELECT proveedors.id, proveedors.nombre, proveedors.direccion, proveedors.telefono, proveedors.email, proveedors.activo FROM proveedors";
+        $datos['proveedors'] = \DB::select($sentencia);
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('proveedor.index', $datos);
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function activos(){
+        $sentencia = "SELECT proveedors.id, proveedors.nombre, proveedors.direccion, proveedors.telefono, proveedors.email, proveedors.activo FROM proveedors WHERE proveedors.activo ='1'";
+        $datos['proveedors'] = \DB::select($sentencia);
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                return view('proveedor.index', $datos);
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function inactivos(){
+        $sentencia = "SELECT proveedors.id, proveedors.nombre, proveedors.direccion, proveedors.telefono, proveedors.email, proveedors.activo FROM proveedors WHERE proveedors.activo ='0'";
+        $datos['proveedors'] = \DB::select($sentencia);
         if (session()->has('id')) {
 
             if (session()->get('rol') == 2) {
@@ -107,7 +140,7 @@ class ProveedorController extends Controller
         Proveedor::where('id', '=', $id)->update($datosProveedor);
 
         $proveedor = Proveedor::findOrFail($id);
-        $datos['proveedores'] = Proveedor::paginate();
+        $datos['proveedors'] = Proveedor::paginate();
 
         return view('proveedor.index', $datos);
     }

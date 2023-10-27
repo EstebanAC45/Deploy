@@ -47,6 +47,7 @@
 
                 <label for="contrasena">Contraseña</label>
                 <input type="password" name="contrasena" id="contrasena" class="form-control" value="{{$cliente->contrasena}}" required><br>
+                <input class="form-control" type="number" name="id_rol" id="id_rol" value="2" hidden>
 
             </div>
         </div>

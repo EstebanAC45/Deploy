@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('carritos', function (Blueprint $table) {
+        Schema::table('ventas', function (Blueprint $table) {
             //
-            $table->dropForeign(['numero_venta']);
+            $table->String('fecha_registro')->nullable();
         });
     }
 
@@ -22,9 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('carritos', function (Blueprint $table) {
+        Schema::table('ventas', function (Blueprint $table) {
             //
-            $table->foreign('numero_venta')->references('numero_venta')->on('ventas');
+            $table->dropColumn('fecha_registro');
         });
     }
 };

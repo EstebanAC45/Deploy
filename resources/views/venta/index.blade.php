@@ -32,22 +32,22 @@
           $contador = 0;
         @endphp
         @foreach($ventas as $venta)
+
         @php
-          $contador++;
-        @endphp
-        @php
+            
             $carrito_venta = $carritos::where('numero_venta', $venta->numero_venta)->get();
         @endphp
         @if($carrito_venta->count() == 0)
         @php
             continue;
-        @endphp
-        @endif
-        <tr>
 
-            <td>
-                {{ $contador }}
-            </td>
+        @endphp
+        @else
+        @php
+            $contador++;
+        @endphp
+        <tr>
+            <td>{{$contador}}</td>
             <td>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#cliente{{$venta->numero_venta}}">
                     <i class="bi bi-person"> {{$venta->nombres}}{{$venta->apellidos}}</i>
@@ -61,7 +61,7 @@
             </td>
             
             <td>
-                {{ $venta->created_at }}
+                {{ $venta->fecha_registro }}
             </td>
             <td>
                 <i>$ {{ $venta->precio_venta }}</i>
@@ -76,7 +76,7 @@
                 </button>            
             </td>
         </tr>
-        
+        @endif
         @endforeach
         
     </tbody>
@@ -125,7 +125,7 @@
                 </td>
 
                 <td>
-                    {{ $venta->created_at }}
+                    {{ $venta->fecha_registro }}
                 </td>
 
                 <td>

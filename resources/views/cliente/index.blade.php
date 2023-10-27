@@ -1,4 +1,3 @@
-@inject ('clientes', 'App\Models\Cliente')
 @extends('layouts.parte1')
 
 @section('contenido')
@@ -27,7 +26,12 @@
         </script>
     @endif
 
-    
+<div class="btn-group" role="group" aria-label="Basic example">
+    <a href="{{ route('cliente.index') }}" class="btn btn-info">Todos</a>
+    <a href="{{ route('cliente.activos') }}" class="btn btn-primary">Activos</a>
+    <a href="{{ route('cliente.inactivos') }}" class="btn btn-secondary">Inactivos</a>
+</div>
+    <br><br>
 <table id="cliente"class="table table-striped" style="width:100%">
     <thead>
         <tr>
@@ -47,7 +51,7 @@
         @php 
             $contador = 0;
         @endphp
-        @foreach ($clientes->get() as $cliente)
+        @foreach ($clientes as $cliente)
         @php 
             $contador++;
         @endphp

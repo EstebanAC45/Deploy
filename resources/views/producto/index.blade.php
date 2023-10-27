@@ -11,9 +11,12 @@
 <br><br>
 <h2>Lista de Productos</h2>
 
-   <input class='rButton' type="radio" name="estado" id="activo" value="activosf">Activos
-    <input class='rButton' type="radio" name="estado" id="inactivo" value="inactivos" >Inactivos
-
+<br>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <a href="{{route('producto.index')}}" class="btn btn-info">Todos</a>
+    <a href="{{ route('producto.activos') }}" class="btn btn-primary">Activos</a>
+    <a href="{{ route('producto.inactivos') }}" class="btn btn-secondary">Inactivos</a>
+</div>
 <br><br>
 <table id="productos" class="table table-striped" style="width:100%">
     <thead class="thead-light">
@@ -120,30 +123,6 @@
 
 <script>
     $(document).ready(function() {
-
-        $('input[type=radio][name=estado]').change(function() {
-            if (this.value == 'activosf') {
-                $('#productos tbody tr').show();
-                $('#productos tbody tr').each(function(index, element) {
-                    if($(element).find('#activarOinactivar').val() == 0){
-                        $(element).hide();
-                    }
-                });
-                
-            }
-            else if (this.value == 'inactivos') {
-                $('#productos tbody tr').hide();
-                $('#productos tbody tr').each(function(index, element) {
-                    if($(element).find('#activarOinactivar').val() == 0){
-                        $(element).show();
-                    }
-                });
-            }
-        });
-
-        
-
-
 
         $('#productos').DataTable({
             "lengthMenu": [[5, 10, 50, -1], [5, 10, 50, "Todos"]],

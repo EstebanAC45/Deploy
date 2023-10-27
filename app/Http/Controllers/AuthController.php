@@ -47,6 +47,8 @@ class AuthController extends Controller
             $request->session()->put('nombre', $user->name);
             $request->session()->put('email', $user->email);
             $request->session()->put('password', $user->password);
+
+
     
             if ($user->rol == 1) {
                 return redirect()->route('venta.create');
@@ -59,7 +61,9 @@ class AuthController extends Controller
             }
         } else {
             // Las credenciales no son válidas
-            return redirect("/")->withSuccess('Los datos introducidos no son correctos');
+            session ()->flash ('mensaje3', 'Usuario o contraseña incorrectos');
+
+            return redirect("/");
         }
     }
 

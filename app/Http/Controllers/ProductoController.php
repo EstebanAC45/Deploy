@@ -158,4 +158,41 @@ class ProductoController extends Controller
         Producto::destroy($id);
         return redirect ('producto')->with('mensaje', 'Producto borrado con éxito');
      }
+
+     public function productoActivo(){
+
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                $sentenciaSQL = "SELECT p.id, p.codigo, p.nombre, c.nombre as categoria, p.descripcion, p.imagen, p.precio, p.stock, p.fecha_vencimiento, p.activo
+                FROM productos p, categorias c WHERE p.id_categoria = c.id AND p.activo = '1'";
+                $datos['productos'] = \DB::select($sentenciaSQL);
+                return view('producto.index', $datos);
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
+
+     }
+
+     public function productoInactivo(){
+
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                $sentenciaSQL = "SELECT p.id, p.codigo, p.nombre, c.nombre as categoria, p.descripcion, p.imagen, p.precio, p.stock, p.fecha_vencimiento, p.activo
+                FROM productos p, categorias c WHERE p.id_categoria = c.id AND p.activo = '0'";
+                $datos['productos'] = \DB::select($sentenciaSQL);
+                return view('producto.index', $datos);
+            }
+
+        } else {
+            return redirect()->route('login');
+        }
+     }
 }

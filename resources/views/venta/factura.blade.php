@@ -44,7 +44,7 @@
 		<h2>Detalle de venta</h2>
 					<p>
 						<strong>Número de venta:</strong> {{ $numero_venta }}<br>
-						<strong>Fecha de venta:</strong> {{ $venta->created_at }}<br>
+						<strong>Fecha de venta:</strong> {{ $venta->fecha_registro }}<br>
 					</p>
 		</div>
 

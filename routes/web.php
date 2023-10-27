@@ -56,4 +56,11 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 Route::resource('empleado', EmpleadoController::class);
 
 Route::get('filtrarProductoProCategoria', [ProductoProveedorController::class, 'filtrarProductoProCategoria'])->name('producto_proveedor.filtrarProductoProCategoria');
-
+Route::get('activas', [CategoriaController::class, 'activas'])->name('categoria.activas');
+Route::get('inactivas',[CategoriaController::class, 'inactivas'])->name('categoria.inactivas');
+Route::get('activos',[ProveedorController::class, 'activos'])->name('proveedor.activos');
+Route::get('inactivos',[ProveedorController::class, 'inactivos'])->name('proveedor.inactivos');
+Route::get('clienteActivo',[ClienteController::class, 'clienteActivo'])->name('cliente.activos');
+Route::get('clienteInactivo',[ClienteController::class, 'clienteInactivo'])->name('cliente.inactivos');
+Route::get('productoActivo',[ProductoController::class, 'productoActivo'])->name('producto.activos');
+Route::get('productoInactivo',[ProductoController::class, 'productoInactivo'])->name('producto.inactivos');

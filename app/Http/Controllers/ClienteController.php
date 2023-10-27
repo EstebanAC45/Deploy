@@ -155,12 +155,39 @@ class ClienteController extends Controller
     {
         //
         $datosCliente = request()->except(['_token', '_method']);
-        Cliente::where('id', '=', $cliente->id)->update($datosCliente);
+
+        $nombres = $request->input('nombres');
+        $apellidos = $request->input('apellidos');
+        $telefono = $request->input('telefono');
+        $direccion = $request->input('direccion');
+        $correo = $request->input('correo');
+        $contrasena = $request->input('contrasena');
+        $compras_realizadas = $request->input('compras_realizadas');
+        $activo = $request->input('activo');
+        $tarjeta_fidelidad = $request->input('tarjeta_fidelidad');
+        $fecha_registro = $request->input('fecha_registro');
+        $id_rol = $request->input('id_rol');
+
+        DB::table('clientes')->where('id', '=', $cliente->id)->update([
+            'nombres' => $nombres,
+            'apellidos' => $apellidos,
+            'telefono' => $telefono,
+            'direccion' => $direccion,
+            'correo' => $correo,
+            'contrasena' => Hash::make($contrasena),
+            'compras_realizadas' => $compras_realizadas,
+            'activo' => $activo,
+            'tarjeta_fidelidad' => $tarjeta_fidelidad,
+            'fecha_registro' => $fecha_registro,
+            'id_rol' => $id_rol,
+        ]);
+
 
         $nombreCliente = $request->input('nombres');
         $apellidoCliente = $request->input('apellidos');
         $correoCliente = $request->input('correo');
         $contrasenaCliente = $request->input('contrasena');
+        
 
         DB::table('users')->where('email', '=', $correoCliente)->update([
             'name' => $nombreCliente . ' ' . $apellidoCliente,
@@ -181,6 +208,44 @@ class ClienteController extends Controller
     public function destroy(Cliente $cliente)
     {
         //
+    }
+
+    public function clienteActivo(){
+
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                $clientes = DB::table('clientes')->where('activo', '=', 1)->get();
+        
+                return view('cliente.index', compact('clientes'));
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
+
+    }
+
+    public function clienteInactivo(){
+
+        if (session()->has('id')) {
+
+            if (session()->get('rol') == 2) {
+                return redirect()->route('producto_proveedor.index');
+            } else {
+                $clientes = DB::table('clientes')->where('activo', '=', 0)->get();
+        
+                return view('cliente.index', compact('clientes'));
+            }
+            
+        } else {
+            return redirect()->route('login');
+        }
+
+
+
     }
 
 

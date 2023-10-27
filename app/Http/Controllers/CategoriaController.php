@@ -81,7 +81,40 @@ class CategoriaController extends Controller
      */
     public function show(Categoria $categoria)
     {
-        //
+        //para mostrar inactivas o activas
+
+    }
+
+    public function activas(){
+        $sentenciaSelect = "SELECT categorias.id, categorias.nombre,categorias.activo FROM categorias WHERE categorias.activo = '1'";
+         $datos['categorias'] = \DB::select($sentenciaSelect);
+
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('categoria.index', $datos);
+            }
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function inactivas(){
+        $sentenciaSelect = "SELECT categorias.id, categorias.nombre,categorias.activo FROM categorias WHERE categorias.activo = '0'";
+         $datos['categorias'] = \DB::select($sentenciaSelect);
+
+        if (session()->has('id')) {
+            
+            if (session()->get('rol') == 2) {
+                return redirect ()->route('producto_proveedor.index');
+            } else {
+                return view('categoria.index', $datos);
+            }
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**

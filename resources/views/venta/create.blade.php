@@ -134,8 +134,8 @@
                 @endif
 
                 <input type="number" name="precio_venta" id="precio_venta" value="{{$total_pagar}}" hidden ><br><br>
-                <input type="text" name="fecha" id="fecha" value="{{ date('d-m-Y h:i:s') }}" hidden>
-                <input type="text" name="created_at" id="created_ad" value="{{date('d-m-Y h:i:s')}}" hidden >
+                <!--<input type="text" name="fecha" id="fecha" value="{{ date('YYYY-MM-DD') }}" hidden>-->
+                <input type="text" name="fecha_registro" id="fecha_registro" value="{{date('d-m-Y h:i:s')}}" hidden >
                 @if($total_pagar > 0)
                 <button type="submit" class="btn btn-primary">Pago con efectivo</button><br>
                 @endif
@@ -161,9 +161,9 @@
                 <input type="number" name="id_cliente" id="cliente_seleccionado1" value="" hidden>
                 <input type="number" name="compras_realizadas" id="compra_seleccionada1" value="" hidden >          
                 @endif
-                <input type="text" name="fecha" id="fecha" value="{{  date('d-m-Y h:i:s') }}" hidden>
+                <!--<input type="text" name="fecha" id="fecha" value="{{  date('d-m-Y h:i:s') }}" hidden>-->
                 <input type="number" name="precio_venta" id="precio_venta" value="{{$total_pagar}}" hidden><br><br>
-                <input type="text" name="created_at" id="created_ad" value="{{date('d-m-Y h:i:s')}}" hidden>
+                <input type="text" name="fecha_registro" id="fecha_registro" value="{{date('d-m-Y h:i:s')}}" hidden>
                 @if($total_pagar > 0)
                 <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
