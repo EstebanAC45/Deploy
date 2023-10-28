@@ -44,7 +44,7 @@
 @endphp
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="http://localhost:8080/too/public/producto_proveedor"><i class="bi bi-shop-window"></i> Supermercado</a>
+    <a class="navbar-brand" href="../public/producto_proveedor"><i class="bi bi-shop-window"></i> Supermercado</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -52,65 +52,65 @@
       <ul class="navbar-nav">
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://localhost:8080/too/public/producto" hidden>Productos</a>
+          <a class="nav-link active" aria-current="page" href="../public/producto" hidden>Productos</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://localhost:8080/too/public/producto">Productos</a>
+          <a class="nav-link active" aria-current="page" href="../public/producto">Productos</a>
         </li>
         @endif
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/proveedor" hidden>Proveedores</a>
+          <a class="nav-link" href="../public/proveedor" hidden>Proveedores</a>
         </li>
         @else 
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/proveedor">Proveedores</a>
+          <a class="nav-link" href="../public/proveedor">Proveedores</a>
         </li>
         @endif
 
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/categoria" hidden>Categorías</a>
+          <a class="nav-link" href="../public/categoria" hidden>Categorías</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/categoria" >Categorías</a>
+          <a class="nav-link" href="../public/categoria" >Categorías</a>
         </li>
         @endif
 
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/cliente" hidden>Clientes</a>
+          <a class="nav-link" href="../public/cliente" hidden>Clientes</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/cliente">Clientes</a>
+          <a class="nav-link" href="../public/cliente">Clientes</a>
         </li>
         @endif
 
         @if (session('rol') == 2 || session('rol') == 1)
         <li class="nav-item">
-          <a class="nav-link " aria-current="page" href="http://localhost:8080/too/public/empleado" hidden>Empleados</a>
+          <a class="nav-link " aria-current="page" href="../public/empleado" hidden>Empleados</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link " aria-current="page" href="http://localhost:8080/too/public/empleado">Empleados</a>
+          <a class="nav-link " aria-current="page" href="../public/empleado">Empleados</a>
         </li>
         @endif
 
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/venta" >Compras realizadas</a>
+          <a class="nav-link" href="../public/venta" >Compras realizadas</a>
         </li>
         @else
         <li class="nav-item">
-          <a class="nav-link" href="http://localhost:8080/too/public/venta">Ventas</a>
+          <a class="nav-link" href="../public/venta">Ventas</a>
         </li>
         @endif
 
         <li class="nav-item ms-auto d-flex align-items-center" id="carrito">
-          <a class="nav-link" href="http://localhost:8080/too/public/venta/create">
+          <a class="nav-link" href="../public/venta/create">
             <i class="bi bi-cart-fill">Ir a Carrito</i>
           </a>
         </li>
