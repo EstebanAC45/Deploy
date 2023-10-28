@@ -46,6 +46,8 @@
                 </select><br>
 
                 <label for="contrasena">Contraseña</label>
+                <!--Desencriptar la contrasena para mostrarla en los inputs-->
+
                 <input type="password" name="contrasena" id="contrasena" class="form-control" value="{{$cliente->contrasena}}" required><br>
                 <input class="form-control" type="number" name="id_rol" id="id_rol" value="2" hidden>
 
