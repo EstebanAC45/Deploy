@@ -52,7 +52,8 @@
             </td>
             <td>
                 <!--Mostrar la imagen del producto-->
-                <img src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="50">
+                <!--<img src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="50">-->
+                <img src="{{ asset('storage').'/'.$producto->imagen }}" alt="" width="50">
             </td>
             <td>{{ $producto->stock }}</td>
             <td>{{ $producto->fecha_vencimiento }}</td>

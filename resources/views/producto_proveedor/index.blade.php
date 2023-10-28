@@ -81,7 +81,8 @@
             @if($producto_proveedor->activo == 1)
         <div class="col-md-4">
         <div class="card" style="width: 18rem;">
-            <center><img src="../storage/app/public/{{$producto_proveedor->imagen}}" alt="" width="140" height="140"></center>
+            <!--<center><img src="../storage/app/public/{{$producto_proveedor->imagen}}" alt="" width="140" height="140"></center>-->
+            <center><img src="{{ asset('storage').'/'.$producto_proveedor->imagen }}" alt="" width="140" height="140"></center>
             <div class="card-body">
                 <input type="text" name="id_producto" id="id_producto" value="{{$producto_proveedor->id_producto}}" hidden>
                 <h5 class="card-title">{{$producto_proveedor->nombre_producto}}  </h5>
