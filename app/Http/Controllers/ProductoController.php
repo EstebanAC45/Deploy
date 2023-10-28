@@ -74,7 +74,10 @@ class ProductoController extends Controller
 
 
         if ($request->hasFile('imagen')) {
-            $datosProducto['imagen'] = $request->file('imagen')->store('uploads', 'public');
+            //agregar a la carpe img de public resources
+            $datosProducto['imagen'] = $request->file('imagen')->store('public');
+
+            
 
         }
         Producto::insert($datosProducto);
@@ -130,8 +133,8 @@ class ProductoController extends Controller
 
         if ($request->hasFile('imagen')) {
             $producto = Producto::findOrFail($id);
-            Storage::delete('public/' . $producto->imagen);
-            $datosProducto['imagen'] = $request->file('imagen')->store('uploads', 'public');
+            Storage::delete('public/'.$producto->imagen);
+            $datosProducto['imagen'] = $request->file('imagen')->store('public');
 
         }
 
