@@ -34,9 +34,27 @@ class PDFController extends Controller
 
     public function show($id)
     {
-        $venta = Venta::find($id);
-        $carrito_venta = Carrito::where('numero_venta', $id)->get();
-        $pdf = PDF::loadView('venta.factura', compact('venta', 'carrito_venta'));
-        return $pdf->stream('factura.pdf');
+        $venta = Venta::findOrFail($id);
+        $carritos = Carrito::where('id_venta', $id)->get();
+        $filenane = 'factura.pdf';
+
+        $data = [
+            'title' => 'Prueba de PDF',
+            'venta' => $venta,
+            'carritos' => $carritos
+        ];
+
+        $html = view() -> make('venta.factura', $data) -> render();
+
+        $pdf = new PDF();
+
+        $pdf::setTitle('Factura');
+        $pdf::addPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+
+        $pdf::Output(public_path($filenane), 'F');
+
+         return response()->download(public_path($filenane));
+         
     }
 }
