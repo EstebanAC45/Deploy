@@ -32,29 +32,13 @@ class PDFController extends Controller
          return response()->download(public_path($filenane));
     }
 
-    public function show($numero_venta)
+    public function show($id)
     {
-        $venta = Venta::findOrFail($numero_venta);
-        $carritos = Carrito::where('numero_venta', $numero_venta)->get();
-        $filenane = 'factura.pdf';
-
-        $data = [
-            'title' => 'Prueba de PDF',
-            'venta' => $venta,
-            'carritos' => $carritos
-        ];
-
-        $html = view() -> make('venta.factura', $data) -> render();
-
-        $pdf = new PDF();
-
-        $pdf::setTitle('Factura');
-        $pdf::addPage();
-        $pdf::writeHTML($html, true, false, true, false, '');
-
-        $pdf::Output(public_path($filenane), 'F');
-
-         return response()->download(public_path($filenane));
-
+        //generar factura que no me de error en produccion en el servidor koyeb
+        $venta = Venta::where('numero_venta', $id)->get();
+        $carrito = Carrito::where('numero_venta', $id)->get();
+        $pdf = PDF::loadView('venta.factura', compact('venta', 'carrito'));
+        return $pdf->stream('factura.pdf');
+        
     }
 }
