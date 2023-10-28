@@ -32,7 +32,7 @@ class PDFController extends Controller
          return response()->download(public_path($filenane));
     }
 
-    public function show($id)
+    public function show($numero_venta)
     {
         $venta = Venta::findOrFail($numero_venta);
         $carritos = Carrito::where('numero_venta', $numero_venta)->get();
