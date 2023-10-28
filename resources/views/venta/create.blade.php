@@ -218,8 +218,8 @@
                                     <td>{{ $producto->descripcion }}</td>
                                     <td>$ {{ $producto->precio }}</td>
                                     <td>
-                                        <!--<img src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="50">-->
-                                        <img src="{{ asset('storage').'/'.$producto->imagen }}" alt="" width="50">
+                                        <!--Mostrar la imagen del producto-->
+                                        <img src="../img/{{$producto->imagen}}" alt="" width="100">
                                     </td>
                                     <td><input type="number" name="cantidad" id="cantidad{{ $producto->id }}" class="form-control form-control-sm"  value="1">
                                     <input type="number" name="id_producto" value="{{$producto->id}}" hidden>

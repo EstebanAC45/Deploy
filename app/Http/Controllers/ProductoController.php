@@ -74,10 +74,10 @@ class ProductoController extends Controller
 
 
         if ($request->hasFile('imagen')) {
-            //almacenar en public/img
-            $datosProducto['imagen'] = $request->file('imagen')->store('public/img');
-
-            
+            $img = $request->file('imagen');
+            $nombreImagen = time().'.'. $img -> getClientOriginalName();
+            $img -> move('img', $nombreImagen);
+            $datosProducto['imagen'] = $nombreImagen;
 
         }
         Producto::insert($datosProducto);
@@ -133,9 +133,11 @@ class ProductoController extends Controller
 
         if ($request->hasFile('imagen')) {
             $producto = Producto::findOrFail($id);
-            Storage::delete('public/'.$producto->imagen);
-            $datosProducto['imagen'] = $request->file('imagen')->store('img');
-
+            $img = $request->file('imagen');
+            $nombreImagen = time().'.'. $img -> getClientOriginalName();
+            $img -> move('img', $nombreImagen);
+            $datosProducto['imagen'] = $nombreImagen;
+            
         }
 
         Producto::where('id', '=', $id)->update($datosProducto);
