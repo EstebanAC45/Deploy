@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\Carrito;
-use Barryvdh\DomPDF\PDF;
+use Iluminate\Support\Facades\File;
 
 
 class PDFController extends Controller
@@ -37,10 +37,7 @@ class PDFController extends Controller
         //generar factura que no me de error en produccion en el servidor koyeb
         $venta = Venta::where('numero_venta', $id)->get();
         $carrito = Carrito::where('numero_venta', $id)->get();
-
-        $pdf = new PDF();
-
-        $pdf = PDF::loadView('venta.factura', compact('venta', 'carrito'));
+        $pdf = \PDF::loadView('venta.factura', compact('venta', 'carrito'));
         return $pdf->stream('factura.pdf');
         
     }
