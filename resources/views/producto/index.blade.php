@@ -48,11 +48,11 @@
             <td>{{ $producto->categoria }}</td>
             <td>$ {{ $producto->precio }}</td>
             <td>{{ $producto->descripcion }}
-            <input type="number" id="activarOinactivar" value="{{$producto->activo}}" hidden>
 
             </td>
             <td>
-                <img src="{{ asset('storage').'/'.$producto->imagen }}" alt="" width="100">
+                <!--Mostrar la imagen del producto-->
+                <img src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="50">
             </td>
             <td>{{ $producto->stock }}</td>
             <td>{{ $producto->fecha_vencimiento }}</td>

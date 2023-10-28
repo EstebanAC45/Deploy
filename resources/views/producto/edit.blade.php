@@ -69,7 +69,7 @@ Editar producto
 
             <label for="imagen">Imagen:</label><br>
                 @if (isset($producto->imagen))
-                    <img  src="{{ asset('storage').'/'.$producto->imagen }}" alt="" width="97" ><br>
+                    <img  src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="97" ><br>
                 @endif
                 <br>
                 <input class="form-control" type="file" name="imagen" id="imagen" value=""><br>
