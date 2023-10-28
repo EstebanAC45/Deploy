@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Venta;
 use App\Models\Carrito;
-use Barryvdh\DomPDF\Facade\PDF;
+use \PDF;
 
 
 class PDFController extends Controller
