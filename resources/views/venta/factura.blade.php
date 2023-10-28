@@ -100,7 +100,7 @@
 							@php
                                 $contador = 0;
                             @endphp
-                            @foreach($carrito_venta as $carrito)
+                            @foreach($carritos::where('numero_venta', $numero_venta)->get() as $carrito)
                             @php
                                 $contador++;
                                 $producto = $productos::where('id', $carrito->id_producto)->get();
