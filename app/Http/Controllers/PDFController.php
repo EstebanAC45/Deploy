@@ -37,6 +37,9 @@ class PDFController extends Controller
         //generar factura que no me de error en produccion en el servidor koyeb
         $venta = Venta::where('numero_venta', $id)->get();
         $carrito = Carrito::where('numero_venta', $id)->get();
+
+        $pdf = new PDF();
+
         $pdf = PDF::loadView('venta.factura', compact('venta', 'carrito'));
         return $pdf->stream('factura.pdf');
         
