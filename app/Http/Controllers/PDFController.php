@@ -34,8 +34,8 @@ class PDFController extends Controller
 
     public function show($id)
     {
-        $venta = Venta::findOrFail($id);
-        $carritos = Carrito::where('id_venta', $id)->get();
+        $venta = Venta::findOrFail($numero_venta);
+        $carritos = Carrito::where('numero_venta', $numero_venta)->get();
         $filenane = 'factura.pdf';
 
         $data = [
@@ -55,6 +55,6 @@ class PDFController extends Controller
         $pdf::Output(public_path($filenane), 'F');
 
          return response()->download(public_path($filenane));
-         
+
     }
 }
