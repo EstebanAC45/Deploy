@@ -98,7 +98,7 @@
                 </button>
                 <script>
                 function carritoCatalogo(id_producto) {
-    let rutacarrito = '{{ route('carrito.store') }}';
+    let rutacarrito = "{{route('carrito.store')}}";
     let stock = parseInt($('#stock' + id_producto).val()); // Convertir a número entero
     let cantidad = parseInt($('#cantidad' + id_producto).val()); // Convertir a número entero
 
