@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('carritos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_producto');
-            $table->unsignedBigInteger('numero_venta')->unique();
+            $table->unsignedBigInteger('numero_venta');
             $table->Integer('cantidad');
             $table->timestamps();
             $table->foreign('id_producto')->references('id')->on('productos');
