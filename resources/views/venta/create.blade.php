@@ -11,6 +11,27 @@
 @section('contenido')
 
 <h3>Bienvenido, aquí puede realizar su compra</h3>
+@if (session()->has('mensaje'))
+    <script>
+        Swal.fire(
+            '!Error!',
+            'Agregue un cliente para realizar la compra',
+            'error'
+        )
+    </script>
+@endif
+
+@if (session()->has('error'))
+    <script>
+        Swal.fire(
+            '!Error!',
+            'Agregue un cliente para realizar la compra',
+            'error'
+        )
+    </script>
+@endif
+
+
 
 
 @php 
@@ -221,9 +242,11 @@
                                         <!--Mostrar la imagen del producto-->
                                         <img src="../img/{{$producto->imagen}}" alt="" width="100">
                                     </td>
-                                    <td><input type="number" name="cantidad" id="cantidad{{ $producto->id }}" class="form-control form-control-sm"  value="1">
-                                    <input type="number" name="id_producto" value="{{$producto->id}}" hidden>
-                                    <input type="number" name="stock" id="stock{{ $producto->id }}" value="{{$producto->stock}}" hidden>
+                                    <td>
+                                        <form action="{{route('carrito.store')}}" method="POST">
+                                            @csrf
+                                        <input type="number" name="cantidad" id="cantidad{{ $producto->id }}" class="form-control form-control-sm"  value="1" min="1" max="{{$producto->stock}}">
+
                                     </td>
 
                                     <td>{{ $producto->stock }}</td>
@@ -236,57 +259,13 @@
                                     
 
                                     <td>
-                                        <button class="btn btn-success" id="seleccionarProducto{{$producto->id}}"
-                                        onclick='sendCarrito({{ $producto->id }})'><i class="bi bi-cart-plus">
-                                             Agregar</i>
-                                            </button>
-
-                                        <script>
-                                            function sendCarrito(id_producto) {
-    let rutacarrito = '{{ route('carrito.store') }}';
-    let stock = parseInt($('#stock' + id_producto).val()); // Convertir a número entero
-    let cantidad = parseInt($('#cantidad' + id_producto).val()); // Convertir a número entero
-
-    if (stock >= cantidad) {
-        console.log('ruta', rutacarrito);
-        $.ajax({
-            url: rutacarrito,
-            method: 'POST',
-            data: {
-                id_producto: id_producto,
-                cantidad: cantidad, // Utiliza la cantidad ya parseada
-                numero_venta: "{{$contador_ventas + 1}}",
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (data) {
-                swal.fire({
-                    title: "Producto añadido al carrito",
-                    text: "Puede ver sus productos en el carrito",
-                    icon: "success",
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            },
-        });
-    } else if (stock < cantidad) {
-        swal.fire({
-            title: "No hay suficiente stock",
-            text: "Ingrese una cantidad menor",
-            icon: "error",
-            confirmButtonText: "Aceptar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.reload();
-            }
-        });
-    }
-}
-                    
-                                        </script>
-
+                                        
+                                            <input type="text" name="principal" value="0" hidden>
+                                            <input type="text" name="id_producto" id="id_producto" value="{{$producto->id}}" hidden>
+                                            <input type="number" name="stock" id="stock{{$producto->id}}" value="{{$producto->stock}}" hidden>
+                                            <input type="number" name="numero_venta" id="numero_venta" value="{{$contador_ventas + 1}}" hidden>
+                                            <button type="submit" class="btn btn-primary" id="seleccionarProducto{{$producto->id}}"><i class="bi bi-cart">Añadir</i></button>
+                                        </form>
                                     </td>
                                 </tr>
 
@@ -517,6 +496,7 @@ $(document).ready(function() {
      });
  });   
 </script>
+<!--
 <script>
     $('#enviarCompraPorEfectivo').on('submit', function(e){
         e.preventDefault();
@@ -545,4 +525,5 @@ $(document).ready(function() {
         });
     })
 </script>
+-->
 @endsection

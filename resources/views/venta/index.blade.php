@@ -7,7 +7,15 @@
 
 @section('contenido')
 <h2>Registro de ventas realizadas</h2>
-
+@if (session()->has('mensaje2'))
+    <script>
+        Swal.fire(
+            '!Éxito!',
+            'Compra realizada con éxito',
+            'success'
+        )
+    </script>
+@endif
 
 @php 
  $rol = session ('rol');

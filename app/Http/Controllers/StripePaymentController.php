@@ -23,6 +23,13 @@ class StripePaymentController extends Controller
         
         $datosVenta = request()->except('_token', 'stripeToken', 'stripeTokenType', 'stripeEmail','compras_realizadas');
 
+        $cliente = request('id_cliente');
+        if ($cliente == 0){
+            session()->flash('error', 'Debe seleccionar un cliente');
+
+            return redirect ('venta/create');
+        }else{
+
         Venta::insert($datosVenta);
 
         $compras_realizadas = $request->input('compras_realizadas');
@@ -44,7 +51,7 @@ class StripePaymentController extends Controller
         
         
         return redirect ('venta');
-        
+    }
     }
 }
     // ...

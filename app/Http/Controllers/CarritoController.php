@@ -53,17 +53,34 @@ class CarritoController extends Controller
         foreach($actualizarStock as $actualizarStock){
             $stock = $actualizarStock->stock;
         }
+
+        if($cantidad > $stock){
+            session()->flash('mensaje', 'No hay suficiente stock');
+            session()->flash('icono', 'error');
+            return redirect('producto_proveedor');
+        }
+        else{
+
         $stock = $stock - $cantidad;
         Producto::where('id', $id_producto)->update(['stock' => $stock]);
 
 
         
-        $datosCarrito = request()->except('_token');
+        $datosCarrito = request()->except('_token', 'stock', 'principal');
 
         Carrito::insert($datosCarrito);
+    }
 
-        return redirect('venta');
+    $principal = $request->input('principal');
 
+    if ($principal == 1) {
+        session()->flash('mensaje5', 'Producto añadido al carrito');
+
+        return redirect ('producto_proveedor');
+    }
+    else{
+        return redirect('venta/create');
+    }
 
     }
 

@@ -49,18 +49,24 @@ class VentaController extends Controller
     {
         //
         $datosVenta = request()->except('_token','compras_realizadas');
-        Venta::insert($datosVenta);
 
         $compras_realizadas = $request->input('compras_realizadas');
         $id_cliente = $request->input('id_cliente');
 
         $compras_realizadas = $compras_realizadas + 1;
 
+        if ($id_cliente == 0) {
+            session()->flash('mensaje', 'Agregue un cliente');
+            session()->flash('icono', 'error');
+            return redirect('venta/create');
+        }else{
+        Venta::insert($datosVenta);
         $sentenciaParaActualizarCompra = "UPDATE clientes SET compras_realizadas = $compras_realizadas WHERE id = $id_cliente";
         \DB::select($sentenciaParaActualizarCompra);
-
+        session()->flash('mensaje1', 'Venta agregada con éxito');
+        session()->flash('icono1', 'success');
         return redirect('venta')->with('mensaje', 'Venta agregada con éxito');
-
+        }
     }
 
     /**

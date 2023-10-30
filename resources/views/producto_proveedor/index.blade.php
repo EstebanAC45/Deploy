@@ -28,6 +28,20 @@
     </script>
 @endif
 
+@php 
+    $sesionCarrito = session()->get('mensaje5');
+@endphp
+@if($sesionCarrito == 'Producto añadido al carrito')
+    <script>
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Producto añadido al carrito',
+            showConfirmButton: false,
+            timer: 2500
+        })
+    </script>
+@endif
 
 <style>   
 
@@ -79,10 +93,14 @@
     <div class="row">
         @foreach($producto_proveedors as $producto_proveedor)
             @if($producto_proveedor->activo == 1)
-        <div class="col-md-4">
+    <div class="col-md-4">
+        <form action="{{route('carrito.store')}}" method="POST">
+            @csrf
+            <div class="col-md-4">
         <div class="card" style="width: 18rem;">
             <center><img src="./img/{{$producto_proveedor->imagen}}" alt="" width="140" height="140"></center>
             <div class="card-body">
+                <input type="text" name="principal" value="1" hidden>
                 <input type="text" name="id_producto" id="id_producto" value="{{$producto_proveedor->id_producto}}" hidden>
                 <h5 class="card-title">{{$producto_proveedor->nombre_producto}}  </h5>
                 <h5 class="card-title">$ {{$producto_proveedor->precio}}</h5>
@@ -92,66 +110,26 @@
                 <input type="number" name="stock" id="stock{{$producto_proveedor->id_producto}}" value="{{$producto_proveedor->stock}}" hidden>
                 <h6><i>Proveedor: {{$producto_proveedor->nombre_proveedor}}</i></h6>
                 </p>
-                <button class="btn btn-primary" id="seleccionarProducto{{$producto_proveedor->id_producto}}"
-                onclick='carritoCatalogo({{ $producto_proveedor->id_producto }})'><i class="bi bi-cart">
-                    Añadir al carrito</i>
-                </button>
-                <script>
-                function carritoCatalogo(id_producto) {
-    let rutacarrito = "{{route('carrito.store')}}";
-    let stock = parseInt($('#stock' + id_producto).val()); // Convertir a número entero
-    let cantidad = parseInt($('#cantidad' + id_producto).val()); // Convertir a número entero
 
-    if (stock >= cantidad) {
-        console.log('ruta', rutacarrito);
-        $.ajax({
-            url: rutacarrito,
-            method: 'POST',
-            data: {
-                id_producto: id_producto,
-                cantidad: cantidad, // Utiliza la cantidad ya parseada
-                numero_venta: "{{$contador_ventas + 1}}",
-                _token: '{{ csrf_token() }}'
-            },
-            success: function (data) {
-                swal.fire({
-                    title: "Producto añadido al carrito",
-                    text: "Puede ver sus productos en el carrito",
-                    icon: "success",
-                    confirmButtonText: "Aceptar",
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            },
-        });
-    } else if (stock < cantidad) {
-        swal.fire({
-            title: "No hay suficiente stock",
-            text: "Ingrese una cantidad menor",
-            icon: "error",
-            confirmButtonText: "Aceptar",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                location.reload();
-            }
-        });
-    }
-}
+            <input type="number" name="numero_venta" id="numero_venta" value="{{$contador_ventas + 1}}" hidden>
+            <button type="submit" class="btn btn-primary" id="seleccionarProducto{{$producto_proveedor->id_producto}}"><i class="bi bi-cart">Añadir al carrito</i></button>
+        </form>
+        
 
-                                            
-                        </script>
                 </div>
             </div>
 <br>
+
         </div>
-        
+    </div>
+
         @endif
         @endforeach
 
     </div>
 </div>
+
+
 
 
 @endsection
