@@ -79,6 +79,8 @@ class ProductoController extends Controller
             $barcode = DNS1D::getBarcodeHTML($request->input('codigo'), 'C128');
             $datosProducto['codigo_barra'] = $barcode;
 
+        }else{
+            $datosProducto['codigo_barra'] = $codigo_barra;
         }
 
         if ($request->hasFile('imagen')) {
@@ -87,7 +89,10 @@ class ProductoController extends Controller
             $img -> move('img', $nombreImagen);
             $datosProducto['imagen'] = $nombreImagen;
 
+        }else{
+            $datosProducto['imagen'] = 'no_disponible.jpg';
         }
+
         Producto::insert($datosProducto);
 
         $traerElIdDesdeProducto = Producto::select('id')->orderBy('id', 'desc')->first();
@@ -156,6 +161,9 @@ class ProductoController extends Controller
             $img -> move('img', $nombreImagen);
             $datosProducto['imagen'] = $nombreImagen;
             
+        }else{
+            $producto = Producto::findOrFail($id);
+            $datosProducto['imagen'] = $producto->imagen;
         }
 
         Producto::where('id', '=', $id)->update($datosProducto);
