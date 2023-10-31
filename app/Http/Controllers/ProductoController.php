@@ -93,7 +93,7 @@ class ProductoController extends Controller
         $traerElIdDesdeProducto = Producto::select('id')->orderBy('id', 'desc')->first();
         $idProducto = $traerElIdDesdeProducto->id;
 
-        $datosProductoProveedor = request()->except('_token', 'id_producto', 'nombre', 'descripcion', 'imagen', 'precio', 'stock', 'fecha_vencimiento', 'activo','codigo', 'id_categoria');
+        $datosProductoProveedor = request()->except('_token', 'id_producto','codigo_barra', 'nombre', 'descripcion', 'imagen', 'precio', 'stock', 'fecha_vencimiento', 'activo','codigo', 'id_categoria');
         $datosProductoProveedor['id_producto'] = $idProducto;
         Producto_Proveedor::insert($datosProductoProveedor);
 
