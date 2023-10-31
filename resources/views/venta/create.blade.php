@@ -131,7 +131,8 @@
                         </tr>
                     </tbody>
             </table>
-        </div>
+        
+    </div>
         
         <div class="col-md-2">
             <form id="enviarCompraPorEfectivo" action="{{ route('venta.store') }}" method="POST">
@@ -162,6 +163,7 @@
                 @endif
             </form>
         </div>
+
         
         <div class="col-md-2">
             <form id="enviarCompraPorTarjeta" action="{{ route('stripe.post') }}" method="POST">
@@ -215,7 +217,7 @@
       </div>
       <div class="modal-body">
          <h6>Productos disponibles</h6>
-
+            <div class="table-responsive">
             <table id="ventas" class="table table-striped table-bordered shadow-lg mt-4" style="width:100%">
                 <thead class="bg-primary text-white">
                     <tr>
@@ -275,6 +277,7 @@
                     @endforeach
                 </tbody>
             </table>
+            </div>
       </div>
       <div class="modal-footer">
       </div>
@@ -387,18 +390,36 @@ $rol = session('rol');
 
 
 
+            <style>
+.table-responsive {
+  overflow-x: auto;
+  max-width: 100%;
+  width: 100%;
+}
+#clientes_responsive {
+    width: 70%;
+  max-width: 1000px;
+}
+@media (max-width: 768px) {
+  #clientes_responsive{
+    width: 100%;
+  }
+}
+
+</style>
+
 
 
 
 <div class="modal fade" id="seleccionarCliente" tabindex="-1" aria-labelledby="seleccionarCliente" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg" id="clientes_responsive">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Seleccione sus credenciales</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <table id="clientes" class="table table-striped table-bordered shadow-lg mt-4" style="width:100%">
+        <table id="clientes" class="table table-striped table-bordered shadow-lg mt-4 table-responsive" style="width:100%">
             <thead>
                 <tr>
                     <th>Nombre</th>

@@ -61,10 +61,10 @@ function ceros($numero) {
                     <option value="0" >No</option>
                 </select>
                     <br>
-                <label for="precio">Precio Venta:</label><br>
+                <label for="precio">Precio unitario venta:</label><br>
                 <input class="form-control"  type="number" name="precio" id="precio" step="any" required><br>
 
-                <label for="stock">Cantidad a comprar:</label><br>
+                <label for="stock">Cantidad disponible:</label><br>
                 <input class="form-control" class="form-control" type="number" name="stock" id="stock" required><br>
 
                 <input class="form-control" type="text" id="id_producto" name="id_producto" value="{{ $contador }}"  hidden>
@@ -81,13 +81,13 @@ function ceros($numero) {
                 <label for="nombre">Nombre:</label><br>
                 <input type="text" class="form-control" name="nombre" id="nombre" pattern="^[a-zA-ZáéíóúñÑ\s]{3,254}$" title="Solo se permiten un mínimo de 3 letras, no números" required ><br>
 
-                <label for="descripcion">Descripción</label> <br>
+                <label for="descripcion">Descripción:</label> <br>
                 <textarea name="descripcion" id="descripcion" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚ, ]+$" cols="43" rows="3" required></textarea><br>
 
                 <label for="imagen">Imagen:</label>
                 <input class="form-control" type="file" name="imagen" id="imagen" value="" required><br>
 
-                <label for="precio_compra">Precio compra</label><br> 
+                <label for="precio_compra">Precio unitario acordado:</label><br> 
                 <input class="form-control" type="number" name="precio_compra" id="precio_compra" step="any" required><br>
 
                 <input class="form-control" type="text" name="codigo_barra" id="codigo_barra" hidden><br>
