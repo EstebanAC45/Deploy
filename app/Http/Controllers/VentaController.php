@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Venta;
 use Illuminate\Http\Request;
+use App\Models\Cliente;
+use App\Models\Producto;
+use App\Models\Carrito;
 
 class VentaController extends Controller
 {
@@ -105,4 +108,80 @@ class VentaController extends Controller
     {
         //
     }
+
+    public function reportes(){
+
+        if (session()->has('id')) {
+
+            if(session()->get('rol') == '3'){
+                $sentencia = "SELECT venta.fecha_registro,venta.id,venta.numero_venta,venta.created_at,venta.fecha,venta.id_cliente,cliente.direccion,cliente.telefono, cliente.nombres,cliente.apellidos,cliente.correo, venta.precio_venta FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id";
+                $datos['ventas'] = \DB::select($sentencia);
+
+                $cliente = Cliente::all();
+                $producto = Producto::all();
+                $venta = Venta::all();
+
+
+            return view('venta.reportes');
+            }else{
+                return redirect()->route('producto_proveedor.index');
+            }
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    public function ventaPorDia(Request $request){
+        
+
+        $fecha_inicio = $request->input('fecha_inicio');
+        $fecha_fin = $request->input('fecha_fin');
+        $tipo_reporte = $request->input('tipo_reporte');
+
+        //invertir fecha
+        $fecha_inicio = date("d-m-Y", strtotime($fecha_inicio));
+        $fecha_fin = date("d-m-Y", strtotime($fecha_fin));
+
+        if ($tipo_reporte == 1) {
+        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id WHERE venta.fecha_registro LIKE '%$fecha_inicio%' GROUP BY dia";
+        $datos['ventas'] = \DB::select($sentencia);
+    
+        $ventasPorDia = collect($datos['ventas']);
+    
+        return view('venta.reportes', compact('ventasPorDia'));
+    }elseif ($tipo_reporte == 2) {
+
+
+        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras 
+             FROM ventas as venta 
+             INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id 
+             WHERE DATE(venta.fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin' 
+             GROUP BY dia";
+
+        $datos['ventas'] = \DB::select($sentencia);
+
+        $ventasPorDia = collect($datos['ventas']);
+
+        return view('venta.reportes', compact('ventasPorDia')); 
+
+
+
+
+
+    }elseif ($tipo_reporte == 3) {
+        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras 
+             FROM ventas as venta 
+             INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id 
+             WHERE DATE(venta.fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin' 
+             GROUP BY dia";
+
+        $datos['ventas'] = \DB::select($sentencia);
+
+        $ventasPorDia = collect($datos['ventas']);
+    
+        return view('venta.reportes', compact('ventasPorDia'));
+    }
+    }
+
+            
 }

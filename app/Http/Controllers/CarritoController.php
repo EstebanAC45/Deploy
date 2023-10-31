@@ -46,6 +46,7 @@ class CarritoController extends Controller
     {
         //
         
+
         $cantidad = $request->input('cantidad');
         $id_producto = $request->input('id_producto');
 
@@ -169,5 +170,25 @@ class CarritoController extends Controller
             return redirect()->route('login');
         }
 
+       }
+
+       public function scanBarcode(Request $request){
+        $codigo_barra = $request->input('codigo_barra');
+        $producto = Producto::where('codigo_barra', $codigo_barra)->get();
+        foreach($producto as $producto){
+            $id_producto = $producto->id;
+        }
+        $datosCarrito = request()->except('_token', 'stock', 'principal', 'codigo_barra');
+        $datosCarrito['id_producto'] = $id_producto;
+        Carrito::insert($datosCarrito);
+
+        $actualizarStock = Producto::where('id', $id_producto)->get();
+        foreach($actualizarStock as $actualizarStock){
+            $stock = $actualizarStock->stock;
+        }
+        $stock = $stock - 1;
+        Producto::where('id', $id_producto)->update(['stock' => $stock]);
+
+        return redirect('venta/create');
        }
 }

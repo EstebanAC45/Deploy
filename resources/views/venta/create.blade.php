@@ -269,7 +269,6 @@
                                     </td>
                                 </tr>
 
-                                
 
                             @endif
                         @endforeach
@@ -490,40 +489,7 @@ $(document).ready(function() {
          "language": {
              "url": "//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json"
          },
-
-
-
-     });
- });   
+     }); 
 </script>
-<!--
-<script>
-    $('#enviarCompraPorEfectivo').on('submit', function(e){
-        e.preventDefault();
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Compra realizada correctamente',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(function(){
-            $('#enviarCompraPorEfectivo').off('submit').submit();
-        });
-    })
-</script>
-<script>
-    $('#enviarCompraPorTarjeta').on('submit', function(e){
-        e.preventDefault();
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Compra realizada correctamente',
-            showConfirmButton: false,
-            timer: 1500
-        }).then(function(){
-            $('#enviarCompraPorEfectivo').off('submit').submit();
-        });
-    })
-</script>
--->
+
 @endsection

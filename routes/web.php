@@ -13,6 +13,7 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EmpleadoController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,3 +65,5 @@ Route::get('clienteActivo',[ClienteController::class, 'clienteActivo'])->name('c
 Route::get('clienteInactivo',[ClienteController::class, 'clienteInactivo'])->name('cliente.inactivos');
 Route::get('productoActivo',[ProductoController::class, 'productoActivo'])->name('producto.activos');
 Route::get('productoInactivo',[ProductoController::class, 'productoInactivo'])->name('producto.inactivos');
+Route::get('/reportes', [VentaController::class, 'reportes'])->name('venta.reportes');
+Route::post('ventaPorDia', [VentaController::class, 'ventaPorDia'])->name('venta.ventaPorDia');

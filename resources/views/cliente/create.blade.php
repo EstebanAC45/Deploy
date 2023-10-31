@@ -33,7 +33,7 @@
                 <input type="text" name="telefono" id="telefono" class="form-control" value="" pattern="[0-9]+" title="Solo se permiten números" required><br>
 
                 <label for="contrasena">{{'Contraseña'}}</label><br>
-                <input type="password" pattern="^[a-zA-Z0-9_]{4,}$" title="Solo letras, números y _" name="contrasena" id="contrasena" class="form-control" value="" required><br>
+                <input type="password" pattern="^[a-zA-Z0-9_]{6,}$" title="Solo letras, números y _, un mínimo de 6 caracteres" name="contrasena" id="contrasena" class="form-control" value="" required><br>
 
                 <label for="compras_realizadas">{{'Compras realizadas'}}</label><br>
                  <input type="number" name="compras_realizadas" id="compras_realizadas" class="form-control" value="0" min="0" required><br>

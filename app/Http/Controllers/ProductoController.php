@@ -7,6 +7,8 @@ use App\Models\Categoria;
 use App\Models\Producto_Proveedor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
+use DNS1D;
 
 
 class ProductoController extends Controller
@@ -25,7 +27,7 @@ class ProductoController extends Controller
         return view('producto.index', $datos);*/
 
 
-        $sentenciaSQL = "SELECT p.id, p.codigo, p.nombre, c.nombre as categoria, p.descripcion, p.imagen, p.precio, p.stock, p.fecha_vencimiento, p.activo
+        $sentenciaSQL = "SELECT p.id, p.codigo,p.codigo_barra, p.nombre, c.nombre as categoria, p.descripcion, p.imagen, p.precio, p.stock, p.fecha_vencimiento, p.activo
          FROM productos p, categorias c WHERE p.id_categoria = c.id";
         $datos['productos'] = \DB::select($sentenciaSQL);
         //return json_encode($datos['productos']);
@@ -71,7 +73,13 @@ class ProductoController extends Controller
     {
         //
         $datosProducto = request()->except('_token', 'id_producto', 'id_proveedor', 'precio_compra');
+        $codigo_barra = $request->input('codigo_barra');
 
+        if ($codigo_barra == null) {
+            $barcode = DNS1D::getBarcodeHTML($request->input('codigo'), 'C128');
+            $datosProducto['codigo_barra'] = $barcode;
+
+        }
 
         if ($request->hasFile('imagen')) {
             $img = $request->file('imagen');
@@ -130,6 +138,16 @@ class ProductoController extends Controller
     {
         //
         $datosProducto = request()->except(['_token', '_method', 'id_producto', 'id_proveedor', 'precio_compra']);
+        $codigo_barra = $request->input('codigo_barra');
+
+        if ($codigo_barra == null) {
+            $barcode = DNS1D::getBarcodeHTML($request->input('codigo'), 'C128');
+            $datosProducto['codigo_barra'] = $barcode;
+
+        }else{
+            $datosProducto['codigo_barra'] = $codigo_barra;
+        }
+
 
         if ($request->hasFile('imagen')) {
             $producto = Producto::findOrFail($id);
@@ -146,7 +164,7 @@ class ProductoController extends Controller
         $datos['productos'] = Producto::paginate();
 
         //Para actulizar el precio de compra y los demás datos del producto_proveedor
-        $datosProductoProveedor = request()->except(['_token', '_method', 'id_producto', 'nombre', 'descripcion', 'imagen', 'precio', 'stock', 'fecha_vencimiento', 'activo','codigo', 'id_categoria']);
+        $datosProductoProveedor = request()->except(['_token', '_method', 'id_producto','codigo_barra', 'nombre', 'descripcion', 'imagen', 'precio', 'stock', 'fecha_vencimiento', 'activo','codigo', 'id_categoria']);
         $datosProductoProveedor['id_producto'] = $id;
         Producto_Proveedor::where('id_producto', '=', $id)->update($datosProductoProveedor);
 
@@ -200,4 +218,7 @@ class ProductoController extends Controller
             return redirect()->route('login');
         }
      }
+
+    
+             
 }

@@ -70,11 +70,22 @@ Editar producto
             <label for="imagen">Imagen:</label><br>
                 @if (isset($producto->imagen))
                    <!-- <img  src="http://localhost:8080/too/storage/app/public/{{$producto->imagen}}" alt="" width="97" ><br>-->
-                    <img src="{{ asset('storage').'/'.$producto->imagen }}" alt="" width="97" ><br>
+                    <img src="../public/img/{{ $producto->imagen }}" alt="" width="97" ><br>
                 @endif
                 <br>
+
+
+
                 <input class="form-control" type="file" name="imagen" id="imagen" value=""><br>
 
+                <label for="codigo_barra">Codigo de barra:</label><br>
+
+                
+                @if (isset($producto->codigo_barra))
+                {!! DNS1D::getBarcodeHTML($producto->codigo, 'C128')!!}
+                {{$producto->codigo}}
+                @endif
+                <br>
                 <label for="fecha_vencimiento">Fecha de Vencimiento:</label><br>
                 <input class="form-control" type="date" name="fecha_vencimiento" id="fecha_vencimiento" value="{{ isset($producto->fecha_vencimiento)?$producto->fecha_vencimiento:'' }}" required><br>
                 

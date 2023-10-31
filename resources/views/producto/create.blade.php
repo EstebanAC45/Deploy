@@ -90,6 +90,8 @@ function ceros($numero) {
                 <label for="precio_compra">Precio compra</label><br> 
                 <input class="form-control" type="number" name="precio_compra" id="precio_compra" step="any" required><br>
 
+                <input class="form-control" type="text" name="codigo_barra" id="codigo_barra" hidden><br>
+
                 <label for="fecha_vencimiento">Fecha de Vencimiento:</label><br>
                 <input class="form-control" type="date" name="fecha_vencimiento" id="fecha_vencimiento" required><br>
                 <br>
