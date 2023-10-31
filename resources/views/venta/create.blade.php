@@ -408,9 +408,6 @@ $rol = session('rol');
 
 </style>
 
-
-
-
 <div class="modal fade" id="seleccionarCliente" tabindex="-1" aria-labelledby="seleccionarCliente" aria-hidden="true">
   <div class="modal-dialog modal-lg" id="clientes_responsive">
     <div class="modal-content">
