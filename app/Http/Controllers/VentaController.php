@@ -138,12 +138,14 @@ class VentaController extends Controller
         $fecha_fin = $request->input('fecha_fin');
         $tipo_reporte = $request->input('tipo_reporte');
 
-        //invertir fecha
-        $fecha_inicio = date("d-m-Y", strtotime($fecha_inicio));
-        $fecha_fin = date("d-m-Y", strtotime($fecha_fin));
 
         if ($tipo_reporte == 1) {
-        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id WHERE venta.fecha_registro LIKE '%$fecha_inicio%' GROUP BY dia";
+        //$sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras FROM ventas as venta INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id WHERE venta.fecha_registro LIKE '%$fecha_inicio%' GROUP BY dia";
+       $sentencia = "SELECT DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras
+       FROM ventas as venta
+       INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id
+       WHERE DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) = '$fecha_inicio'
+       GROUP BY dia;";
         $datos['ventas'] = \DB::select($sentencia);
     
         $ventasPorDia = collect($datos['ventas']);
@@ -152,11 +154,11 @@ class VentaController extends Controller
     }elseif ($tipo_reporte == 2) {
 
 
-        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras 
-             FROM ventas as venta 
-             INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id 
-             WHERE DATE(venta.fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin' 
-             GROUP BY dia";
+        $sentencia = "SELECT DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras
+        FROM ventas as venta
+        INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id
+        WHERE DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) BETWEEN '$fecha_inicio' AND '$fecha_fin'
+        GROUP BY dia;";
 
         $datos['ventas'] = \DB::select($sentencia);
 
@@ -169,11 +171,11 @@ class VentaController extends Controller
 
 
     }elseif ($tipo_reporte == 3) {
-        $sentencia = "SELECT DATE(venta.fecha_registro) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras 
-             FROM ventas as venta 
-             INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id 
-             WHERE DATE(venta.fecha_registro) BETWEEN '$fecha_inicio' AND '$fecha_fin' 
-             GROUP BY dia";
+        $sentencia = "SELECT DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras
+        FROM ventas as venta
+        INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id
+        WHERE DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) BETWEEN '$fecha_inicio' AND '$fecha_fin'
+        GROUP BY dia;";
 
         $datos['ventas'] = \DB::select($sentencia);
 

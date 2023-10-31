@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-4">
             <label for="tipo_reporte">Tipo de reporte</label>
-            <select class="form-control" id="tipo_reporte" name="tipo_reporte" required>
+            <select class="form-select" id="tipo_reporte" name="tipo_reporte" required>
                 <option value="1">Ventas por día</option>
                 <option value="2">Ventas por semana</option>
                 <option value="3">Ventas por mes</option>
@@ -30,7 +30,7 @@
         </div>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Generar reporte</button>
+    <button type="submit" class="btn btn-primary"><i class="bi bi-bar-chart-fill"> Generar reporte</i></button>
 </form>
 
 <script>
