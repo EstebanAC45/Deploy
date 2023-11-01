@@ -58,7 +58,7 @@
             <td>{{$contador}}</td>
             <td>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#cliente{{$venta->numero_venta}}">
-                    <i class="bi bi-person"> {{$venta->nombres}}{{$venta->apellidos}}</i>
+                    <i class="bi bi-person"> {{$venta->nombres}} {{$venta->apellidos}}</i>
                 </button>
             </td>
             <td>
