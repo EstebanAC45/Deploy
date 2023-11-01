@@ -806,9 +806,9 @@ class Arr
      * @param  int  $options
      * @return array
      */
-    public static function sortRecursiveDesc($array, $options = SORT_REGULAR)
+    public function sortRecursiveDesc($array, $options = SORT_REGULAR)
     {
-        return static::sortRecursive($array, $options, true);
+        return $this->sortRecursive($array, $options, true);
     }
 
     /**

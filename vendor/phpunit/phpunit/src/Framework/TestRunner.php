@@ -283,7 +283,6 @@ final class TestRunner
             $iniSettings   = GlobalState::getIniSettingsAsString();
         }
 
-        $exportObjects    = Event\Facade::emitter()->exportsObjects() ? 'true' : 'false';
         $coverage         = CodeCoverage::instance()->isActive() ? 'true' : 'false';
         $linesToBeIgnored = var_export(CodeCoverage::instance()->linesToBeIgnored(), true);
 
@@ -311,7 +310,6 @@ final class TestRunner
         $includePath             = "'." . $includePath . ".'";
         $offset                  = hrtime();
         $serializedConfiguration = $this->saveConfigurationForChildProcess();
-        $processResultFile       = tempnam(sys_get_temp_dir(), 'phpunit_');
 
         $var = [
             'bootstrap'                      => $bootstrap,
@@ -333,8 +331,6 @@ final class TestRunner
             'offsetSeconds'                  => $offset[0],
             'offsetNanoseconds'              => $offset[1],
             'serializedConfiguration'        => $serializedConfiguration,
-            'processResultFile'              => $processResultFile,
-            'exportObjects'                  => $exportObjects,
         ];
 
         if (!$runEntireClass) {
@@ -344,7 +340,7 @@ final class TestRunner
         $template->setVar($var);
 
         $php = AbstractPhpProcess::factory();
-        $php->runTestJob($template->render(), $test, $processResultFile);
+        $php->runTestJob($template->render(), $test);
 
         @unlink($serializedConfiguration);
     }
