@@ -1,4 +1,3 @@
-@inject ('pdf', 'App\Http\Controllers\PDFController')
 @inject('productos', 'App\Models\Producto')
 @inject('carritos', 'App\Models\Carrito')
 @inject('ventas', 'App\Models\Venta')
