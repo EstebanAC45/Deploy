@@ -45,11 +45,12 @@
                     <option value="0" {{$cliente->tarjeta_fidelidad==0?'selected':''}}>No</option>
                 </select><br>
 
-                <label for="contrasena">Contraseña</label>
+                @if (session('rol') ==2)
 
-                
-        
-                <input type="password" name="contrasena" id="contrasena" class="form-control" value="{{$cliente->contrasena}}" pattern="^[a-zA-Z0-9_]{6,}$" title="Solo letras, números y _, un mínimo de 6 caracteres" required><br>
+                <label for="contrasena">Contraseña</label>
+                <input type="password" name="contrasena" id="contrasena" class="form-control"  pattern="^[a-zA-Z0-9_]{6,}$" title="Solo letras, números y _, un mínimo de 6 caracteres" required><br>
+
+                @endif
                 <input class="form-control" type="number" name="id_rol" id="id_rol" value="2" hidden>
 
             </div>

@@ -22,7 +22,7 @@ class ClienteController extends Controller
         if (session()->has('id')) {
 
             if (session()->get('rol') == 2) {
-                return redirect()->route('producto_proveedor.index');
+                return view ('cliente.index', $datos);
             } else {
                 return view('cliente.index', $datos);
             }
@@ -179,12 +179,67 @@ class ClienteController extends Controller
         $telefono = $request->input('telefono');
         $direccion = $request->input('direccion');
         $correo = $request->input('correo');
-        $contrasena = $request->input('contrasena');
         $compras_realizadas = $request->input('compras_realizadas');
         $activo = $request->input('activo');
         $tarjeta_fidelidad = $request->input('tarjeta_fidelidad');
         $fecha_registro = $request->input('fecha_registro');
         $id_rol = $request->input('id_rol');
+
+        DB::table('clientes')->where('id', '=', $cliente->id)->update([
+            'nombres' => $nombres,
+            'apellidos' => $apellidos,
+            'telefono' => $telefono,
+            'direccion' => $direccion,
+            'correo' => $correo,
+            'compras_realizadas' => $compras_realizadas,
+            'activo' => $activo,
+            'tarjeta_fidelidad' => $tarjeta_fidelidad,
+            'fecha_registro' => $fecha_registro,
+            'id_rol' => $id_rol,
+        ]);
+
+
+        $nombreCliente = $request->input('nombres');
+        $apellidoCliente = $request->input('apellidos');
+        $correoCliente = $request->input('correo');
+        $contrasenaCliente = $request->input('contrasena');
+        
+
+        DB::table('users')->where('email', '=', $correoCliente)->update([
+            'name' => $nombreCliente . ' ' . $apellidoCliente,
+            'email' => $correoCliente,
+            'rol' => 2,
+        ]);
+
+        
+        
+
+        return redirect('cliente');
+    }
+
+    public function updateCliente(Request $request, Cliente $cliente)
+    {
+        //
+        $datosCliente = request()->except(['_token', '_method']);
+        $contrasena = $request->input('contrasena');
+        $confirmar_contrasena = $request->input('confirmar_contrasena');
+        $nombres = $request->input('nombres');
+        $apellidos = $request->input('apellidos');
+        $telefono = $request->input('telefono');
+        $direccion = $request->input('direccion');
+        $correo = $request->input('correo');
+        $compras_realizadas = $request->input('compras_realizadas');
+        $activo = $request->input('activo');
+        $tarjeta_fidelidad = $request->input('tarjeta_fidelidad');
+        $fecha_registro = $request->input('fecha_registro');
+        $id_rol = $request->input('id_rol');
+
+        if ($contrasena != $confirmar_contrasena) {
+            session ()->flash ('mensaje10', 'Las contraseñas no coinciden');
+            session ()->flash ('icono10', 'warning');
+
+            return redirect('cliente');
+        }
 
         DB::table('clientes')->where('id', '=', $cliente->id)->update([
             'nombres' => $nombres,
@@ -214,11 +269,14 @@ class ClienteController extends Controller
             'rol' => 2,
         ]);
 
-        
+        session ()->flash ('mensaje12', 'Datos actualizados con éxito');
+        session ()->flash ('icono2', 'success');
         
 
         return redirect('cliente');
     }
+
+    
 
     /**
      * Remove the specified resource from storage.

@@ -83,7 +83,7 @@
 
         @if (session('rol') == 2)
         <li class="nav-item">
-          <a class="nav-link" href="../cliente" hidden>Clientes</a>
+          <a class="nav-link" href="../cliente" >Mis datos</a>
         </li>
         @else
         <li class="nav-item">

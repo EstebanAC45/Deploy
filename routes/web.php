@@ -67,3 +67,4 @@ Route::get('productoActivo',[ProductoController::class, 'productoActivo'])->name
 Route::get('productoInactivo',[ProductoController::class, 'productoInactivo'])->name('producto.inactivos');
 Route::get('/reportes', [VentaController::class, 'reportes'])->name('venta.reportes');
 Route::post('ventaPorDia', [VentaController::class, 'ventaPorDia'])->name('venta.ventaPorDia');
+Route::post('updateCliente', [ClienteController::class, 'updateCliente'])->name('cliente.updateCliente');
