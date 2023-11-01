@@ -67,6 +67,13 @@ class EmpleadoController extends Controller
         $activo = $request->input('activo');
         $fecha_registro = $request->input('fecha_registro');
         $id_rol = $request->input('id_rol');
+        $confirmar_contrasena = $request->input('confirmar_contrasena');
+
+        if ($contrasena != $confirmar_contrasena) {
+            session ()->flash ('mensaje7', 'Las contraseñas no coinciden');
+            session ()->flash ('icono7', 'warning');
+            return redirect('empleado');
+        }
 
         //validamos un correo por empleado y un correo por usuario
         $correoCliente = DB::table('empleados')->where('correo', '=', $correo)->count();
@@ -179,8 +186,15 @@ class EmpleadoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Empleado $empleado)
+    public function destroy($id)
     {
         //
+        $empleado = Empleado::findOrFail($id);
+        $empleado->delete();
+
+        session()->flash('mensaje3', 'Empleado eliminado con éxito');
+        session()->flash('icono3', 'success');
+
+        return redirect('empleado');
     }
 }

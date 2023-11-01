@@ -1,5 +1,4 @@
 @inject ('empleados', 'App\Models\Empleado')
-@inject ('roles', 'App\Models\Rol')
 @extends('layouts.parte1')
 
 @section('contenido')
@@ -42,6 +41,27 @@
         </script>
     @endif
 
+    @if (session()->has('mensaje3'))
+        <script>
+            Swal.fire(
+                '¡Éxito!',
+                'Empleado eliminado con éxito',
+                'success'
+            )
+        </script>
+    @endif
+
+
+
+    @if(session()->has('mensaje7'))
+    <script>
+        Swal.fire(
+            'Error!',
+            'Las contraseñas no coinciden',
+            'error'
+        )
+    </script>
+    @endif
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -192,15 +212,23 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password">Contraseña</label>
-                            <input type="password" name="contrasena" pattern="^[a-zA-Z0-9_]{6,}$" title="Deben ser más de 5 caracteres, entre ellos letras, números y _" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
+                            <input type="password" name="contrasena" pattern="^[a-zA-Z0-9_]{6,}$" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
                         </div>
+
                         <div class="col-md-6">
-                            <label for="rol">Cargo: </label>
+                            <label for="confirmar_contrasena">Confirmar contraseña</label>
+                            <input type="password" name="confirmar_contrasena" pattern="^[a-zA-Z0-9_]{6,}$" id="confirmar_contrasena" class="form-control" placeholder="Confirme contraseña" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="">Cargo</label>
                             <select name="id_rol" id="id_rol" class="form-select" required>
+                                <option value="">Seleccione un cargo</option>
                                 <option value="1">Empleado</option>
                                 <option value="3">Administrador</option>
                             </select>
                         </div>
+
                         <input type="number" name="activo" id="activo" value="1" hidden>
                         <input type="text" name="fecha_registro" id="fecha_registro" value="{{date('d-m-y')}}" hidden>
                     </div>
