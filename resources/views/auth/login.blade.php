@@ -95,6 +95,16 @@
             )
         </script>
 @endif  
+
+@if (session()->has('mensaje9'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'Las contraseñas no coinciden',
+                'error'
+            )
+        </script>
+@endif
     <div class="login-container">
         <img src="https://cdn-icons-png.flaticon.com/512/3082/3082031.png" alt="Logo">
         <h1>Aquí todo encuentras</h1>
@@ -114,7 +124,7 @@
         <!-- Modal -->
 
     <div class="modal fade" id="crearCliente" tabindex="-1" aria-labelledby="crearCliente" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Supermercado, Aquí todo encuentras - Registro</h5>
@@ -147,7 +157,11 @@
                         </div>
                         <div class="col-md-6">
                             <label for="password">Contraseña</label>
-                            <input type="password" pattern="^[a-zA-Z0-9_]{4,}$" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
+                            <input type="password" pattern="^[a-zA-Z0-9_]{6,}$" name="contrasena" id="contrasena" class="form-control" placeholder="Ingrese contraseña" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="confirmar_contrasena">Confirmar contraseña</label>
+                            <input type="password" pattern="^[a-zA-Z0-9_]{6,}$" name="confirmar_contrasena" id="confirmar_contrasena" class="form-control" placeholder="Confirme contraseña" required>
                         </div>
                         <input type="number" name="compras_realizadas" id="compras_realizadas" value="0" hidden>
                         <input type="number" name="activo" id="activo" value="1" hidden>

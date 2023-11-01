@@ -26,6 +26,16 @@
         </script>
     @endif
 
+    @if (session()->has('mensaje9'))
+        <script>
+            Swal.fire(
+                '¡Error!',
+                'Las contraseñas no coinciden',
+                'error'
+            )
+        </script>
+    @endif
+
 <div class="btn-group" role="group" aria-label="Basic example">
     <a href="{{ route('cliente.index') }}" class="btn btn-info">Todos</a>
     <a href="{{ route('cliente.activos') }}" class="btn btn-primary">Activos</a>

@@ -68,12 +68,30 @@ class ClienteController extends Controller
         $tarjeta_fidelidad = $request->input('tarjeta_fidelidad');
         $fecha_registro = $request->input('fecha_registro');
         $id_rol = $request->input('id_rol');
+        $confirmar_contrasena = $request->input('confirmar_contrasena');
+
+        if ($contrasena != $confirmar_contrasena) {
+            if (session()->has('id')) {
+
+                if (session()->get('rol') == 1 || session()->get('rol') == 3) {
+                    session ()->flash ('mensaje9', 'Las contraseñas no coinciden');
+                    session ()->flash ('icono9', 'warning');
+        
+                    return redirect('cliente');
+                }
+            } else {
+                session ()->flash ('mensaje9', 'Las contraseñas no coinciden');
+                session ()->flash ('icono9', 'warning');
+    
+                return redirect()->route('login');
+            }
+        }
 
         //validaremos que solo exista un correo por cliente y por usuario
         $correoCliente = DB::table('clientes')->where('correo', '=', $correo)->count();
         $correoUsuario = DB::table('users')->where('email', '=', $correo)->count();
 
-        if ($correoCliente > 0 || $correoUsuario > 0) {
+        if ($correoCliente > 0 || $correoUsuario > 0 ) {
             session ()->flash ('mensaje', 'El correo ya existe');
             session ()->flash ('icono', 'warning');
             
@@ -114,7 +132,7 @@ class ClienteController extends Controller
         if (session()->has('id')) {
 
             if (session()->get('rol') == 1 || session()->get('rol') == 3) {
-                return redirect('cliente')->with('mensaje', 'Cliente agregado con éxito');
+                return redirect('cliente');
             }
         } else {
             return redirect()->route('login');

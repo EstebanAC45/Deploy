@@ -24,6 +24,11 @@
                 <label  for="fecha_registro">{{'Fecha de registro'}}</label><br>
                 <input class="form-control" type="date" name="fecha_registro" id="fecha_registro" value="" required><br>
 
+                <label for="tarjeta_fidelidad">{{'Tarjeta de fidelidad'}}</label><br>
+                <select class="form-select" name="tarjeta_fidelidad" id="tarjeta_fidelidad">
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select><br>
             </div>
             <div class="col-md-6">
                 <label for="apellidos">{{'Apellidos'}}</label><br>
@@ -35,14 +40,16 @@
                 <label for="contrasena">{{'Contraseña'}}</label><br>
                 <input type="password" pattern="^[a-zA-Z0-9_]{6,}$" title="Solo letras, números y _, un mínimo de 6 caracteres" name="contrasena" id="contrasena" class="form-control" value="" required><br>
 
+                <label for="confirmar_contrasena">{{'Confirmar contraseña'}}</label><br>
+                <input type="password" pattern="^[a-zA-Z0-9_]{6,}$" title="Solo letras, números y _, un mínimo de 6 caracteres" name="confirmar_contrasena" id="confirmar_contrasena" class="form-control" value="" required><br>
+
                 <label for="compras_realizadas">{{'Compras realizadas'}}</label><br>
                  <input type="number" name="compras_realizadas" id="compras_realizadas" class="form-control" value="0" min="0" required><br>
 
-                 <label for="tarjeta_fidelidad">{{'Tarjeta de fidelidad'}}</label><br>
-                <select class="form-select" name="tarjeta_fidelidad" id="tarjeta_fidelidad">
-                    <option value="1">Sí</option>
-                    <option value="0">No</option>
-                </select><br>
+                <br>
+                <input class="form-control" type="number" name="id_rol" id="id_rol" value="2" hidden>
+                <input class="btn btn-primary" type="submit" value="Agregar">
+
             </div>
         </div>
     </div>
@@ -53,9 +60,6 @@
  
 
 
-
-    <input class="form-control" type="number" name="id_rol" id="id_rol" value="2" hidden>
-    <input class="btn btn-primary" type="submit" value="Agregar">
 
 </form>
 
