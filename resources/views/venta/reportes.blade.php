@@ -24,8 +24,7 @@
             <label for="tipo_reporte">Tipo de reporte</label>
             <select class="form-select" id="tipo_reporte" name="tipo_reporte" required>
                 <option value="1">Ventas por día</option>
-                <option value="2">Ventas por semana</option>
-                <option value="3">Ventas por mes</option>
+                <option value="2">Ventas por tramo de tiempo</option>
             </select>
         </div>
     </div>

@@ -170,19 +170,8 @@ class VentaController extends Controller
 
 
 
-    }elseif ($tipo_reporte == 3) {
-        $sentencia = "SELECT DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) as dia, SUM(venta.precio_venta) as total_ventas, COUNT('venta.id') as cantida_compras
-        FROM ventas as venta
-        INNER JOIN clientes as cliente ON venta.id_cliente = cliente.id
-        WHERE DATE(TO_DATE(venta.fecha_registro, 'DD-MM-YYYY')) BETWEEN '$fecha_inicio' AND '$fecha_fin'
-        GROUP BY dia;";
-
-        $datos['ventas'] = \DB::select($sentencia);
-
-        $ventasPorDia = collect($datos['ventas']);
-    
-        return view('venta.reportes', compact('ventasPorDia'));
     }
+    
     }
 
             
