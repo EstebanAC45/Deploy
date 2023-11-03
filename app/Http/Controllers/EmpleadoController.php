@@ -195,6 +195,10 @@ class EmpleadoController extends Controller
         session()->flash('mensaje3', 'Empleado eliminado con éxito');
         session()->flash('icono3', 'success');
 
+        //eliminamos tambien de la tabla user
+        $user = User::where('email', $empleado->correo)->first();
+        $user->delete();
+                
         return redirect('empleado');
     }
 }
