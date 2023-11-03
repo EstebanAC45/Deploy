@@ -51,7 +51,9 @@ function ceros($numero) {
                 <label for="categoria">Categoría:</label><br>
                 <select class="form-select" name="id_categoria" id="id_categoria">
                     @foreach ($categoria->all() as $categoria)
+                        @if($categoria->activo == 1)
                         <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                        @endif
                     @endforeach
                 </select>
                 <br><br>
