@@ -72,7 +72,9 @@ function ceros($numero) {
                 <label for="id_proveedor">{{'Proveedor'}}</label><br>
                 <select class="form-select" name="id_proveedor" id="id_proveedor">
                     @foreach ($proveedor->all() as $proveedor)
+                        @if($proveedor->activo == 1)
                         <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                        @endif
                     @endforeach
                 </select> <br>
             </div>

@@ -35,6 +35,16 @@ class AuthController extends Controller
     
         $email = $request->input('email');
         $password = $request->input('password');
+
+        //verificamos por el correo si está activo en la tabla cliente
+        $cliente = Cliente::where('correo', $email)->first();
+
+        if($cliente && $cliente->activo == 0){
+            session ()->flash ('mensaje8', 'Usted está desactivado, contacte con el administrador');
+        
+             return redirect("/");
+        }
+        
     
         // Buscamos al usuario por su email
         $user = User::where('email', $email)->first();

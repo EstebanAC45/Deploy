@@ -96,6 +96,19 @@
         </script>
 @endif  
 
+@if (session()->has('mensaje8'))
+        <script>
+            Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Usted se encuentra desactivado, contacte con el administrador',
+            footer: 'Contactanos al 7145-9710',
+            })
+            
+        </script>
+@endif
+
+
 @if (session()->has('mensaje9'))
         <script>
             Swal.fire(

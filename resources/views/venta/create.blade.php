@@ -428,6 +428,7 @@ $rol = session('rol');
             </thead>
             <tbody>
                 @foreach ($cliente->get() as $cliente)
+                 @if($cliente->activo == 1)
                 <tr>
 
                     <td>{{ $cliente->nombres }}</td>
@@ -466,6 +467,7 @@ $rol = session('rol');
                     
                     });
                 </script>
+                @endif
                 @endforeach
             </tbody>
         </table>

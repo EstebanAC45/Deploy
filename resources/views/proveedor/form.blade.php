@@ -9,7 +9,7 @@
     <input type="text" class="form-control" name="direccion" pattern="^[a-zA-ZáéíóúñÑ\s, ]{3,254}$" title="Por favor ingrese al menos 3 caracteres, ya sean letras o números." required value="{{ isset($proveedor->direccion)?$proveedor->direccion:''}}" required><br>
 
     <label for="email_proveedor">Email Proveedor</label><br>
-    <input type="email" readonly class="form-control" name="email"  value="{{ isset($proveedor->email)?$proveedor->email:'' }}" required><br>
+    <input type="email" class="form-control" name="email"  value="{{ isset($proveedor->email)?$proveedor->email:'' }}" required><br>
 
     <label for="activo">Activo</label><br>
     <select class="form-select" name="activo" id="activo">
