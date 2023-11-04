@@ -18,6 +18,7 @@
 <h4>Bienvenid@ {{$nombre}}, navega por nuestro catalogo de productos</h4>
 @else
 <h4>Empleado:  {{$nombre}}</h4>
+@endif
 
 @if(session()->has('mensaje'))
     <script>
