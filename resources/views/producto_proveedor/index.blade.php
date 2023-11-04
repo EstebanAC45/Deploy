@@ -14,7 +14,10 @@
     $rol = session('rol');
 @endphp
 
+@if($rol == 2)
 <h4>Bienvenid@ {{$nombre}}, navega por nuestro catalogo de productos</h4>
+@else
+<h4>Empleado:  {{$nombre}}</h4>
 
 @if(session()->has('mensaje'))
     <script>
